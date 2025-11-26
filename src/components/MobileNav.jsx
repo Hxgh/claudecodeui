@@ -1,8 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { MessageSquare, Folder, Terminal, GitBranch, Globe, CheckSquare } from 'lucide-react';
 import { useTasksSettings } from '../contexts/TasksSettingsContext';
 
 function MobileNav({ activeTab, setActiveTab, isInputFocused }) {
+  const { t } = useTranslation();
   const { tasksEnabled } = useTasksSettings();
   const navItems = [
     {
@@ -43,7 +45,7 @@ function MobileNav({ activeTab, setActiveTab, isInputFocused }) {
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
-          
+
           return (
             <button
               key={item.id}
@@ -57,7 +59,7 @@ function MobileNav({ activeTab, setActiveTab, isInputFocused }) {
                   ? 'text-blue-600 dark:text-blue-400'
                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
               }`}
-              aria-label={item.id}
+              aria-label={t(`navigation.${item.id}`)}
             >
               <Icon className="w-5 h-5" />
               {isActive && (

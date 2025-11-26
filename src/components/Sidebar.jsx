@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
+import { useTranslation } from 'react-i18next';
 import { ScrollArea } from './ui/scroll-area';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -17,28 +18,28 @@ import { useTaskMaster } from '../contexts/TaskMasterContext';
 import { useTasksSettings } from '../contexts/TasksSettingsContext';
 
 // Move formatTimeAgo outside component to avoid recreation on every render
-const formatTimeAgo = (dateString, currentTime) => {
+const formatTimeAgo = (dateString, currentTime, t) => {
   const date = new Date(dateString);
   const now = currentTime;
-  
+
   // Check if date is valid
   if (isNaN(date.getTime())) {
-    return 'Unknown';
+    return t('sidebar.timeAgo.unknown');
   }
-  
+
   const diffInMs = now - date;
   const diffInSeconds = Math.floor(diffInMs / 1000);
   const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
   const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-  
-  if (diffInSeconds < 60) return 'Just now';
-  if (diffInMinutes === 1) return '1 min ago';
-  if (diffInMinutes < 60) return `${diffInMinutes} mins ago`;
-  if (diffInHours === 1) return '1 hour ago';
-  if (diffInHours < 24) return `${diffInHours} hours ago`;
-  if (diffInDays === 1) return '1 day ago';
-  if (diffInDays < 7) return `${diffInDays} days ago`;
+
+  if (diffInSeconds < 60) return t('sidebar.timeAgo.justNow');
+  if (diffInMinutes === 1) return t('sidebar.timeAgo.minAgo', { count: 1 });
+  if (diffInMinutes < 60) return t('sidebar.timeAgo.minsAgo', { count: diffInMinutes });
+  if (diffInHours === 1) return t('sidebar.timeAgo.hourAgo');
+  if (diffInHours < 24) return t('sidebar.timeAgo.hoursAgo', { count: diffInHours });
+  if (diffInDays === 1) return t('sidebar.timeAgo.dayAgo');
+  if (diffInDays < 7) return t('sidebar.timeAgo.daysAgo', { count: diffInDays });
   return date.toLocaleDateString();
 };
 
@@ -63,6 +64,7 @@ function Sidebar({
   isMobile,
   onToggleSidebar
 }) {
+  const { t } = useTranslation();
   const [expandedProjects, setExpandedProjects] = useState(new Set());
   const [editingProject, setEditingProject] = useState(null);
   const [showNewProject, setShowNewProject] = useState(false);
@@ -524,7 +526,7 @@ function Sidebar({
               size="sm"
               className="h-8 w-8 px-0 hover:bg-accent transition-colors duration-200"
               onClick={onToggleSidebar}
-              title="Hide sidebar"
+              title={t('sidebar.hideSidebar')}
             >
               <svg
                 className="w-4 h-4"
@@ -637,7 +639,7 @@ function Sidebar({
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Search projects..."
+              placeholder={t('sidebar.searchProjects')}
               value={searchFilter}
               onChange={(e) => setSearchFilter(e.target.value)}
               className="pl-9 h-9 text-sm bg-muted/50 border-0 focus:bg-background focus:ring-1 focus:ring-primary/20"
@@ -1102,7 +1104,7 @@ function Sidebar({
                                 <div className="flex items-center gap-1 mt-0.5">
                                       <Clock className="w-2.5 h-2.5 text-muted-foreground" />
                                       <span className="text-xs text-muted-foreground">
-                                        {formatTimeAgo(sessionTime, currentTime)}
+                                        {formatTimeAgo(sessionTime, currentTime, t)}
                                       </span>
                                       {messageCount > 0 && (
                                         <Badge variant="secondary" className="text-xs px-1 py-0 ml-auto">
@@ -1163,7 +1165,7 @@ function Sidebar({
                                     <div className="flex items-center gap-1 mt-0.5">
                                       <Clock className="w-2.5 h-2.5 text-muted-foreground" />
                                       <span className="text-xs text-muted-foreground">
-                                        {formatTimeAgo(sessionTime, currentTime)}
+                                        {formatTimeAgo(sessionTime, currentTime, t)}
                                       </span>
                                       {messageCount > 0 && (
                                         <Badge variant="secondary" className="text-xs px-1 py-0 ml-auto">
