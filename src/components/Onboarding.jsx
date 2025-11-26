@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ChevronRight, ChevronLeft, Check, GitBranch, User, Mail, LogIn, ExternalLink, Loader2 } from 'lucide-react';
 import ClaudeLogo from './ClaudeLogo';
 import CursorLogo from './CursorLogo';
@@ -7,6 +8,7 @@ import { authenticatedFetch } from '../utils/api';
 import { useAuth } from '../contexts/AuthContext';
 
 const Onboarding = ({ onComplete }) => {
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
   const [gitName, setGitName] = useState('');
   const [gitEmail, setGitEmail] = useState('');
@@ -160,14 +162,14 @@ const Onboarding = ({ onComplete }) => {
     // Step 0: Git config validation and submission
     if (currentStep === 0) {
       if (!gitName.trim() || !gitEmail.trim()) {
-        setError('Both git name and email are required');
+        setError(t('onboarding.errorRequired'));
         return;
       }
 
       // Validate email format
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(gitEmail)) {
-        setError('Please enter a valid email address');
+        setError(t('onboarding.errorInvalidEmail'));
         return;
       }
 
@@ -231,20 +233,20 @@ const Onboarding = ({ onComplete }) => {
 
   const steps = [
     {
-      title: 'Git Configuration',
-      description: 'Set up your git identity for commits',
+      title: t('onboarding.gitConfig'),
+      description: t('onboarding.gitConfigDesc'),
       icon: GitBranch,
       required: true
     },
     {
-      title: 'Claude Code CLI',
-      description: 'Connect your Claude Code account',
+      title: t('onboarding.claudeCLI'),
+      description: t('onboarding.claudeCLIDesc'),
       icon: () => <ClaudeLogo size={24} />,
       required: false
     },
     {
-      title: 'Cursor CLI',
-      description: 'Connect your Cursor account',
+      title: t('onboarding.cursorCLI'),
+      description: t('onboarding.cursorCLIDesc'),
       icon: () => <CursorLogo size={24} />,
       required: false
     }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Badge } from './ui/badge';
@@ -10,9 +11,11 @@ import CredentialsSettings from './CredentialsSettings';
 import GitSettings from './GitSettings';
 import TasksSettings from './TasksSettings';
 import LoginModal from './LoginModal';
+import LanguageSwitcher from './LanguageSwitcher';
 import { authenticatedFetch } from '../utils/api';
 
 function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
+  const { t } = useTranslation();
   const { isDarkMode, toggleDarkMode } = useTheme();
   const [allowedTools, setAllowedTools] = useState([]);
   const [disallowedTools, setDisallowedTools] = useState([]);
@@ -698,7 +701,7 @@ function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
           <div className="flex items-center gap-3">
             <SettingsIcon className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
             <h2 className="text-lg md:text-xl font-semibold text-foreground">
-              Settings
+              {t('settings.title')}
             </h2>
           </div>
           <Button
@@ -723,7 +726,7 @@ function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
                     : 'border-transparent text-muted-foreground hover:text-foreground'
                 }`}
               >
-                Tools
+                {t('settings.tabs.tools')}
               </button>
               <button
                 onClick={() => setActiveTab('appearance')}
@@ -733,7 +736,7 @@ function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
                     : 'border-transparent text-muted-foreground hover:text-foreground'
                 }`}
               >
-                Appearance
+                {t('settings.tabs.appearance')}
               </button>
               <button
                 onClick={() => setActiveTab('git')}
@@ -744,7 +747,7 @@ function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
                 }`}
               >
                 <GitBranch className="w-4 h-4 inline mr-2" />
-                Git
+                {t('settings.tabs.git')}
               </button>
               <button
                 onClick={() => setActiveTab('api')}
@@ -755,7 +758,7 @@ function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
                 }`}
               >
                 <Key className="w-4 h-4 inline mr-2" />
-                API & Tokens
+                {t('settings.tabs.apiKeys')}
               </button>
               <button
                 onClick={() => setActiveTab('tasks')}
@@ -765,7 +768,7 @@ function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
                     : 'border-transparent text-muted-foreground hover:text-foreground'
                 }`}
               >
-                Tasks
+                {t('settings.tabs.tasks')}
               </button>
             </div>
           </div>
@@ -783,10 +786,10 @@ function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
         <div className="flex items-center justify-between">
           <div>
             <div className="font-medium text-foreground">
-              Dark Mode
+              {t('settings.appearance.darkMode')}
             </div>
             <div className="text-sm text-muted-foreground">
-              Toggle between light and dark themes
+              {t('settings.appearance.darkModeDesc')}
             </div>
           </div>
           <button
@@ -819,10 +822,10 @@ function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
         <div className="flex items-center justify-between">
           <div>
             <div className="font-medium text-foreground">
-              Project Sorting
+              {t('settings.appearance.projectSorting')}
             </div>
             <div className="text-sm text-muted-foreground">
-              How projects are ordered in the sidebar
+              {t('settings.appearance.projectSortingDesc')}
             </div>
           </div>
           <select
@@ -830,26 +833,33 @@ function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
             onChange={(e) => setProjectSortOrder(e.target.value)}
             className="text-sm bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 w-32"
           >
-            <option value="name">Alphabetical</option>
-            <option value="date">Recent Activity</option>
+            <option value="name">{t('settings.appearance.alphabetical')}</option>
+            <option value="date">{t('settings.appearance.recentActivity')}</option>
           </select>
         </div>
       </div>
     </div>
 
+    {/* Language Settings */}
+    <div className="space-y-4">
+      <div className="bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+        <LanguageSwitcher />
+      </div>
+    </div>
+
     {/* Code Editor Settings */}
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-foreground">Code Editor</h3>
+      <h3 className="text-lg font-semibold text-foreground">{t('codeEditor.title', 'Code Editor')}</h3>
 
       {/* Editor Theme */}
       <div className="bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
         <div className="flex items-center justify-between">
           <div>
             <div className="font-medium text-foreground">
-              Editor Theme
+              {t('settings.appearance.editorTheme')}
             </div>
             <div className="text-sm text-muted-foreground">
-              Default theme for the code editor
+              {t('settings.appearance.editorThemeDesc')}
             </div>
           </div>
           <button
@@ -880,10 +890,10 @@ function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
         <div className="flex items-center justify-between">
           <div>
             <div className="font-medium text-foreground">
-              Word Wrap
+              {t('settings.appearance.wordWrap')}
             </div>
             <div className="text-sm text-muted-foreground">
-              Enable word wrapping by default in the editor
+              {t('settings.appearance.wordWrapDesc')}
             </div>
           </div>
           <button
@@ -908,10 +918,10 @@ function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
         <div className="flex items-center justify-between">
           <div>
             <div className="font-medium text-foreground">
-              Show Minimap
+              {t('settings.appearance.showMinimap')}
             </div>
             <div className="text-sm text-muted-foreground">
-              Display a minimap for easier navigation in diff view
+              {t('settings.appearance.showMinimapDesc')}
             </div>
           </div>
           <button
@@ -936,10 +946,10 @@ function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
         <div className="flex items-center justify-between">
           <div>
             <div className="font-medium text-foreground">
-              Show Line Numbers
+              {t('settings.appearance.lineNumbers')}
             </div>
             <div className="text-sm text-muted-foreground">
-              Display line numbers in the editor
+              {t('settings.appearance.lineNumbersDesc')}
             </div>
           </div>
           <button
@@ -964,10 +974,10 @@ function Settings({ isOpen, onClose, projects = [], initialTab = 'tools' }) {
         <div className="flex items-center justify-between">
           <div>
             <div className="font-medium text-foreground">
-              Font Size
+              {t('settings.appearance.fontSize')}
             </div>
             <div className="text-sm text-muted-foreground">
-              Editor font size in pixels
+              {t('settings.appearance.fontSizeDesc')}
             </div>
           </div>
           <select
