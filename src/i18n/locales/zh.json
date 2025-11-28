@@ -24,7 +24,10 @@
     "add": "添加",
     "remove": "移除",
     "update": "更新",
-    "language": "语言"
+    "language": "语言",
+    "active": "活跃",
+    "inactive": "停用",
+    "tip": "提示"
   },
   "sidebar": {
     "newProject": "新建项目",
@@ -47,6 +50,7 @@
     "removeFromFavorites": "从收藏中移除",
     "hideSidebar": "隐藏侧边栏",
     "showSidebar": "显示侧边栏",
+    "aiCodingAssistant": "AI 编程GUI工具",
     "timeAgo": {
       "justNow": "刚刚",
       "minAgo": "{{count}} 分钟前",
@@ -57,6 +61,31 @@
       "daysAgo": "{{count}} 天前",
       "unknown": "未知"
     }
+  },
+  "mainContent": {
+    "welcome": {
+      "title": "选择您的项目",
+      "description": "从侧边栏选择一个项目以开始使用 Claude 编程。每个项目包含您的聊天会话和文件历史。",
+      "tipDesktop": "点击侧边栏的文件夹图标创建新项目",
+      "tipMobile": "点击上方菜单按钮访问项目"
+    },
+    "loading": {
+      "title": "加载 Claude Code UI",
+      "subtitle": "正在设置您的工作区..."
+    },
+    "tabs": {
+      "chat": "聊天",
+      "shell": "终端",
+      "files": "文件",
+      "projectFiles": "项目文件",
+      "git": "源代码控制",
+      "tasks": "任务",
+      "taskMaster": "TaskMaster",
+      "project": "项目"
+    },
+    "newSession": "新建会话",
+    "dragToResize": "拖动调整大小",
+    "prdSaved": "PRD 保存成功！"
   },
   "navigation": {
     "chat": "聊天",
@@ -78,7 +107,15 @@
     "sendMessage": "发送消息",
     "abort": "终止",
     "regenerate": "重新生成",
-    "tokenUsage": "Token 用量"
+    "tokenUsage": "Token 用量",
+    "dropImagesHere": "将图片拖放到此处",
+    "implementationPlan": "实施计划",
+    "permissionModes": {
+      "default": "默认模式",
+      "acceptEdits": "接受编辑",
+      "planMode": "计划模式",
+      "trustAll": "信任全部"
+    }
   },
   "onboarding": {
     "welcome": "欢迎使用 Claude Code UI",
@@ -114,27 +151,79 @@
   },
   "settings": {
     "title": "设置",
+    "saveSettings": "保存设置",
+    "saveSuccess": "设置保存成功！",
+    "saveFailed": "保存设置失败",
     "tabs": {
       "tools": "工具",
       "mcpServers": "MCP 服务器",
       "codeEditor": "代码编辑器",
       "apiKeys": "API 密钥",
+      "credentials": "凭据",
       "git": "Git",
       "tasks": "任务",
       "appearance": "外观"
     },
+    "auth": {
+      "title": "认证",
+      "signIn": "登录您的 Claude 账户以启用 AI 功能",
+      "signInCursor": "登录您的 Cursor 账户以启用 AI 功能",
+      "reAuth": "重新认证或切换账户",
+      "checking": "正在检查认证状态...",
+      "loggedIn": "已登录",
+      "as": "为",
+      "notAuthenticated": "未认证",
+      "claudeCliLogin": "Claude CLI 登录",
+      "cursorCliLogin": "Cursor CLI 登录",
+      "login": "登录"
+    },
+    "permissions": {
+      "title": "权限设置",
+      "cursorTitle": "Cursor 权限设置",
+      "skipPrompts": "跳过权限提示（谨慎使用）",
+      "skipPromptsDesc": "等同于 --dangerously-skip-permissions 标志",
+      "skipPromptsDescCursor": "等同于 Cursor CLI 的 -f 标志"
+    },
     "tools": {
       "allowed": "允许的工具",
+      "allowedDesc": "自动允许且不需要权限提示的工具",
       "disallowed": "禁止的工具",
+      "disallowedDesc": "自动阻止且不需要权限提示的工具",
       "skipPermissions": "跳过权限检查",
-      "addTool": "添加工具模式",
+      "addTool": "添加工具",
+      "quickAddTools": "快速添加常用工具：",
+      "noAllowed": "未配置允许的工具",
+      "noDisallowed": "未配置禁止的工具",
       "commonPatterns": "常用模式",
-      "provider": "提供商"
+      "provider": "提供商",
+      "patternExamples": "工具模式示例：",
+      "patternAllowGitLog": "允许所有 git log 命令",
+      "patternAllowGitDiff": "允许所有 git diff 命令",
+      "patternAllowWrite": "允许所有 Write 工具使用",
+      "patternAllowRead": "允许所有 Read 工具使用",
+      "patternBlockRm": "阻止所有 rm 命令（危险）"
+    },
+    "cursor": {
+      "allowedCommands": "允许的 Shell 命令",
+      "allowedCommandsDesc": "自动允许且不需要权限提示的 Shell 命令",
+      "disallowedCommands": "禁止的 Shell 命令",
+      "disallowedCommandsDesc": "应始终拒绝的 Shell 命令",
+      "addCommand": "添加命令",
+      "quickAddCommands": "快速添加常用命令：",
+      "noAllowedCommands": "未配置允许的 Shell 命令",
+      "noDisallowedCommands": "未配置禁止的 Shell 命令",
+      "commandExamples": "Cursor Shell 命令示例：",
+      "exampleLs": "允许 ls 命令",
+      "exampleGitStatus": "允许 git status 命令",
+      "exampleMkdir": "允许 mkdir 命令",
+      "exampleFlag": "标志 - 跳过所有权限提示（危险）"
     },
     "mcp": {
       "title": "MCP 服务器",
+      "description": "模型上下文协议服务器为 Claude 提供额外的工具和数据源",
       "addServer": "添加 MCP 服务器",
       "editServer": "编辑服务器",
+      "command": "命令",
       "serverName": "服务器名称",
       "serverType": "类型",
       "scope": "作用域",
@@ -161,21 +250,41 @@
     },
     "apiKeys": {
       "title": "API 密钥",
-      "newKey": "创建新密钥",
+      "newKey": "新建 API 密钥",
       "keyName": "API 密钥名称",
       "keyNamePlaceholder": "API 密钥名称（例如：生产服务器）",
+      "description": "生成 API 密钥以从其他应用程序访问外部 API。",
+      "documentation": "API 文档",
+      "noKeysYet": "尚未创建 API 密钥。",
       "created": "创建时间",
+      "lastUsed": "最后使用",
       "expires": "过期时间",
       "neverExpires": "永不过期",
       "saveWarning": "⚠️ 保存您的 API 密钥",
-      "saveWarningDetail": "请确保现在复制您的 API 密钥。您将无法再次看到它！",
+      "saveWarningDetail": "这是您唯一能看到此密钥的机会。请安全存储。",
+      "savedIt": "我已保存",
       "copyKey": "复制密钥",
-      "generating": "生成中..."
+      "generating": "生成中...",
+      "confirmDelete": "您确定要删除此 API 密钥吗？"
+    },
+    "githubCredentials": {
+      "title": "GitHub 凭据",
+      "addToken": "添加令牌",
+      "description": "添加 GitHub 个人访问令牌以克隆私有仓库。您也可以在 API 请求中直接传递令牌而无需存储。",
+      "noTokensYet": "尚未添加 GitHub 令牌。",
+      "tokenName": "令牌名称",
+      "tokenNamePlaceholder": "令牌名称（例如：个人仓库）",
+      "tokenPlaceholder": "GitHub 个人访问令牌 (ghp_...)",
+      "descriptionPlaceholder": "描述（可选）",
+      "added": "添加时间",
+      "howToCreate": "如何创建 GitHub 个人访问令牌 →",
+      "confirmDelete": "您确定要删除此 GitHub 令牌吗？"
     },
     "git": {
       "title": "Git 配置",
       "name": "Git 用户名",
       "email": "Git 邮箱",
+      "description": "配置您的 git 身份用于提交。这些设置将全局应用。",
       "autoCommit": "自动提交",
       "autoCommitDesc": "保存文件时自动提交更改"
     },
@@ -204,6 +313,39 @@
       "fontSizeDesc": "代码编辑器的默认字体大小"
     }
   },
+  "quickSettings": {
+    "title": "快速设置",
+    "openPanel": "打开设置面板",
+    "closePanel": "关闭设置面板",
+    "sections": {
+      "appearance": "外观",
+      "toolDisplay": "工具显示",
+      "viewOptions": "视图选项",
+      "inputSettings": "输入设置"
+    },
+    "darkMode": "深色模式",
+    "autoExpandTools": "自动展开工具",
+    "showRawParameters": "显示原始参数",
+    "showThinking": "显示思考过程",
+    "autoScrollToBottom": "自动滚动到底部",
+    "sendByCtrlEnter": "Ctrl+Enter 发送",
+    "sendByCtrlEnterDesc": "启用后，按 Ctrl+Enter 发送消息而非单独按 Enter。这对使用输入法的用户很有用，可避免误发送。"
+  },
+  "tasksSettings": {
+    "checkingInstallation": "正在检查 TaskMaster 安装状态...",
+    "notInstalled": {
+      "title": "TaskMaster AI CLI 未安装",
+      "description": "TaskMaster CLI 是使用任务管理功能所必需的。请安装以开始使用：",
+      "installCommand": "npm install -g task-master-ai",
+      "viewOnGitHub": "在 GitHub 上查看",
+      "afterInstallation": "安装后：",
+      "step1": "重启此应用程序",
+      "step2": "TaskMaster 功能将自动可用",
+      "step3": "在您的项目目录中使用 task-master init"
+    },
+    "enableIntegration": "启用 TaskMaster 集成",
+    "enableDesc": "在界面中显示 TaskMaster 任务、横幅和侧边栏指示器"
+  },
   "git": {
     "title": "Git",
     "staged": "已暂存的更改",
@@ -213,14 +355,66 @@
     "unstage": "取消暂存",
     "stageAll": "暂存全部",
     "commit": "提交",
+    "committing": "提交中...",
     "commitMessage": "提交消息",
-    "commitMessagePlaceholder": "输入提交消息...",
+    "commitMessagePlaceholder": "消息 (Ctrl+Enter 提交)",
+    "commitChanges": "提交更改",
     "branch": "分支",
+    "branchName": "分支名称",
     "switchBranch": "切换分支",
     "createBranch": "创建分支",
+    "createNewBranch": "创建新分支",
+    "creating": "创建中...",
     "deleteBranch": "删除分支",
-    "noChanges": "无更改",
-    "currentBranch": "当前分支"
+    "noChanges": "未检测到更改",
+    "currentBranch": "当前分支",
+    "selectProject": "选择项目以查看源代码控制",
+    "changes": "更改",
+    "history": "历史",
+    "filesSelected": "已选择 {{count}} 个文件",
+    "filesSelected_plural": "已选择 {{count}} 个文件",
+    "selected": "已选择",
+    "selectAll": "全选",
+    "deselectAll": "取消全选",
+    "all": "全部",
+    "none": "无",
+    "fileStatusGuide": "文件状态说明",
+    "modified": "已修改",
+    "added": "已添加",
+    "deleted": "已删除",
+    "noCommitsYet": "尚无提交",
+    "noCommitsDesc": "此仓库尚无任何提交。创建第一个提交以开始跟踪更改。",
+    "createInitialCommit": "创建初始提交",
+    "creatingInitialCommit": "创建初始提交中...",
+    "noCommitsFound": "未找到提交记录",
+    "gitTip": "在项目目录中运行 <code>git init</code> 以初始化 git 源代码控制。",
+    "publish": "发布",
+    "publishing": "发布中...",
+    "push": "推送",
+    "pushing": "推送中...",
+    "pull": "拉取",
+    "pulling": "拉取中...",
+    "fetch": "获取",
+    "fetching": "获取中...",
+    "discard": "放弃",
+    "discardChanges": "放弃更改",
+    "deleteFile": "删除文件",
+    "confirmCommit": "确认提交",
+    "confirmPull": "确认拉取",
+    "confirmPush": "确认推送",
+    "publishBranch": "发布分支",
+    "cancel": "取消",
+    "generateCommitMessage": "生成提交消息",
+    "commitFilesBtn": "提交 {{count}} 个文件",
+    "commitFilesBtn_plural": "提交 {{count}} 个文件",
+    "branchFromCurrent": "将从当前分支 ({{branch}}) 创建新分支",
+    "upToDate": "与远程同步",
+    "commitsAhead": "领先 {{count}} 个提交",
+    "commitsAhead_plural": "领先 {{count}} 个提交",
+    "commitsBehind": "落后 {{count}} 个提交",
+    "commitsBehind_plural": "落后 {{count}} 个提交",
+    "scrollView": "滚动",
+    "wrapView": "换行"
   },
   "tasks": {
     "title": "任务",
@@ -265,7 +459,47 @@
     "previousChange": "上一处更改",
     "nextChange": "下一处更改",
     "clickToEdit": "点击编辑文件名",
-    "clickToOpen": "点击打开文件"
+    "clickToOpen": "点击打开文件",
+    "showingChanges": "显示更改",
+    "changes": "处更改",
+    "lines": "行数",
+    "characters": "字符数",
+    "shortcuts": "按 Ctrl+S 保存 • Esc 关闭",
+    "loading": "加载中 {{fileName}}..."
+  },
+  "prdEditor": {
+    "loading": "加载 PRD 中...",
+    "filenamePlaceholder": "输入 PRD 文件名",
+    "editFilename": "点击编辑文件名",
+    "prd": "PRD",
+    "new": "新建",
+    "subtitle": "产品需求文档",
+    "previewMode": "预览 Markdown",
+    "editMode": "切换到编辑模式",
+    "enableWordWrap": "启用自动换行",
+    "disableWordWrap": "禁用自动换行",
+    "toggleTheme": "切换主题",
+    "downloadPrd": "下载 PRD",
+    "generateTasks": "从 PRD 内容生成任务",
+    "generateTasksShort": "生成任务",
+    "savePrd": "保存 PRD",
+    "words": "字数",
+    "format": "格式：Markdown",
+    "generateModal": {
+      "title": "从 PRD 生成任务",
+      "proTipTitle": "💡 专业提示：直接询问 Claude Code！",
+      "proTipDesc": "您可以直接在聊天中询问 Claude Code 来解析您的 PRD 并生成任务。AI 助手会自动保存您的 PRD，并创建包含实施细节的详细任务。",
+      "exampleLabel": "示例：",
+      "willDo": "这将会：保存您的 PRD，分析其内容，并生成包含子任务、依赖关系和实施细节的结构化任务。",
+      "learnMore": "更多示例和高级用法：",
+      "viewDocs": "查看 TaskMaster 文档 →",
+      "gotIt": "知道了，我会直接询问 Claude Code"
+    },
+    "overwriteModal": {
+      "title": "文件已存在",
+      "message": "名为 \"{{fileName}}\" 的 PRD 文件已存在。您想要用当前内容覆盖它吗？",
+      "overwrite": "覆盖"
+    }
   },
   "fileTree": {
     "title": "文件",
@@ -301,6 +535,434 @@
     "browse": "浏览",
     "recentPaths": "最近路径",
     "creating": "创建中...",
-    "created": "项目创建成功！"
+    "created": "项目创建成功！",
+    "steps": {
+      "type": "类型",
+      "configure": "配置",
+      "confirm": "确认"
+    },
+    "chooseTypeQuestion": "您已有工作区，还是想创建一个新的？",
+    "existingWorkspace": "现有工作区",
+    "existingWorkspaceDesc": "我已经在服务器上有一个工作区，只需要将它添加到项目列表中",
+    "newWorkspace": "新建工作区",
+    "newWorkspaceDesc": "创建新的工作区，可选择从 GitHub 仓库克隆",
+    "workspacePath": "工作区路径",
+    "whereCreateWorkspace": "工作区应该创建在哪里？",
+    "existingPathPlaceholder": "/path/to/existing/workspace",
+    "newPathPlaceholder": "/path/to/new/workspace",
+    "existingPathHint": "现有工作区目录的完整路径",
+    "newPathHint": "新工作区将创建的完整路径",
+    "githubUrlOptional": "GitHub URL（可选）",
+    "githubUrlPlaceholder": "https://github.com/username/repository",
+    "githubUrlHint": "留空创建空工作区，或提供 GitHub URL 进行克隆",
+    "githubAuthOptional": "GitHub 认证（可选）",
+    "githubAuthHint": "仅私有仓库需要。公开仓库可以无需认证克隆。",
+    "loadingTokens": "加载已存储的令牌...",
+    "storedToken": "已存储令牌",
+    "newToken": "新令牌",
+    "nonePublic": "无（公开仓库）",
+    "selectToken": "选择令牌",
+    "selectTokenPlaceholder": "-- 选择令牌 --",
+    "githubToken": "GitHub 令牌",
+    "tokenForOperation": "此令牌仅用于本次操作",
+    "publicRepoTip": "💡 <strong>公开仓库</strong>不需要认证。如果克隆公开仓库可以跳过提供令牌。",
+    "tokenOptionalForPublic": "GitHub 令牌（公开仓库可选）",
+    "tokenPlaceholderOptional": "ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx（公开仓库留空）",
+    "noStoredTokensHint": "没有已存储的令牌。您可以在设置 → API 密钥中添加令牌以便重复使用。",
+    "reviewConfig": "检查您的配置",
+    "workspaceType": "工作区类型",
+    "path": "路径",
+    "cloneFrom": "克隆自",
+    "authentication": "认证",
+    "usingStoredToken": "使用已存储令牌：{{name}}",
+    "usingProvidedToken": "使用提供的令牌",
+    "noAuthentication": "无认证",
+    "confirmExistingMsg": "工作区将被添加到您的项目列表中，并可用于 Claude/Cursor 会话。",
+    "confirmNewGithubMsg": "将创建新工作区并从 GitHub 克隆仓库。",
+    "confirmNewEmptyMsg": "将在指定路径创建空的工作区目录。",
+    "createProject": "创建项目",
+    "selectTypeError": "请选择您是否已有工作区或想创建新的",
+    "providePathError": "请提供工作区路径"
+  },
+  "setupForm": {
+    "welcomeTitle": "欢迎使用 Claude Code UI",
+    "welcomeDesc": "设置您的账户以开始使用",
+    "username": "用户名",
+    "usernamePlaceholder": "输入您的用户名",
+    "password": "密码",
+    "passwordPlaceholder": "输入您的密码",
+    "confirmPassword": "确认密码",
+    "confirmPasswordPlaceholder": "再次输入密码",
+    "passwordMismatch": "密码不匹配",
+    "usernameTooShort": "用户名至少需要 3 个字符",
+    "passwordTooShort": "密码至少需要 6 个字符",
+    "settingUp": "设置中...",
+    "createAccount": "创建账户",
+    "singleUserNote": "这是单用户系统，只能创建一个账户。"
+  },
+  "login": {
+    "welcomeBack": "欢迎回来",
+    "signInToAccount": "登录您的 Claude Code UI 账户",
+    "username": "用户名",
+    "usernamePlaceholder": "请输入用户名",
+    "password": "密码",
+    "passwordPlaceholder": "请输入密码",
+    "signIn": "登录",
+    "signingIn": "登录中...",
+    "enterCredentials": "输入您的凭据以访问 Claude Code UI",
+    "errorBothRequired": "请输入用户名和密码",
+    "claudeCliLogin": "Claude CLI 登录",
+    "cursorCliLogin": "Cursor CLI 登录",
+    "cliLogin": "CLI 登录"
+  },
+  "errorBoundary": {
+    "somethingWentWrong": "出错了",
+    "errorOccurred": "加载聊天界面时发生错误。",
+    "errorDetails": "错误详情",
+    "tryAgain": "重试"
+  },
+  "createTask": {
+    "title": "创建 AI 生成的任务",
+    "proTipTitle": "💡 小技巧：直接询问 Claude Code！",
+    "proTipDesc": "您可以直接在聊天中让 Claude Code 为您创建任务。AI 助手会自动生成带有研究支持的详细任务。",
+    "exampleLabel": "示例：",
+    "examplePrompt": "「请添加一个使用 Cloudinary 实现用户头像上传的新任务，研究最佳方案。」",
+    "runsCommand": "这将运行：",
+    "learnMore": "了解更多示例和高级用法：",
+    "viewDocs": "查看 TaskMaster 文档 →",
+    "gotIt": "明白了，我会直接询问 Claude Code"
+  },
+  "gitSettings": {
+    "title": "Git 配置",
+    "description": "配置您的 git 身份信息用于提交。这些设置将通过以下命令全局应用：",
+    "gitName": "Git 用户名",
+    "gitNameHelp": "您的 git 提交用户名",
+    "gitEmail": "Git 邮箱",
+    "gitEmailHelp": "您的 git 提交邮箱",
+    "saving": "保存中...",
+    "saveConfig": "保存配置",
+    "savedSuccess": "保存成功"
+  },
+  "apiKeysSettings": {
+    "saveApiKey": "⚠️ 保存您的 API 密钥",
+    "saveOnlyTime": "这是您唯一一次看到此密钥的机会，请妥善保存。",
+    "savedIt": "我已保存",
+    "apiKeys": "API 密钥",
+    "newApiKey": "新建 API 密钥",
+    "apiKeysDesc": "生成 API 密钥以便从其他应用程序访问外部 API。",
+    "apiKeyNamePlaceholder": "API 密钥名称（例如：生产服务器）",
+    "noApiKeysYet": "尚未创建 API 密钥。",
+    "created": "创建于",
+    "lastUsed": "最近使用",
+    "githubTokens": "GitHub 令牌",
+    "addToken": "添加令牌",
+    "githubTokensDesc": "添加 GitHub 个人访问令牌以通过外部 API 克隆私有仓库。",
+    "tokenNamePlaceholder": "令牌名称（例如：个人仓库）",
+    "githubTokenPlaceholder": "GitHub 个人访问令牌（ghp_...）",
+    "noGithubTokensYet": "尚未添加 GitHub 令牌。",
+    "added": "添加于",
+    "externalApiDoc": "外部 API 文档",
+    "externalApiDocDesc": "了解如何使用外部 API 从您的应用程序触发 Claude/Cursor 会话。",
+    "viewApiDoc": "查看 API 文档 →",
+    "confirmDeleteApiKey": "确定要删除此 API 密钥吗？",
+    "confirmDeleteToken": "确定要删除此 GitHub 令牌吗？"
+  },
+  "versionUpdate": {
+    "updateAvailable": "有可用更新",
+    "newVersionReady": "新版本已就绪",
+    "currentVersion": "当前版本",
+    "latestVersion": "最新版本",
+    "whatsNew": "更新内容：",
+    "viewFullRelease": "查看完整版本说明",
+    "updateProgress": "更新进度：",
+    "manualUpgrade": "手动升级：",
+    "upgradeCommand": "git checkout main && git pull && npm install",
+    "upgradeHint": "或点击「立即更新」自动运行更新。",
+    "later": "稍后",
+    "copyCommand": "复制命令",
+    "updateNow": "立即更新",
+    "updating": "更新中...",
+    "startingUpdate": "开始更新...",
+    "updateSuccess": "更新成功！",
+    "restartHint": "请重启服务器以应用更改。",
+    "updateFailed": "更新失败：",
+    "showSidebar": "显示侧边栏"
+  },
+  "taskCard": {
+    "task": "任务",
+    "taskId": "任务 ID: {{id}}",
+    "dependsOn": "依赖于",
+    "statusLabel": "状态",
+    "progress": "进度",
+    "subtasksCompleted": "已完成 {{done}}/{{total}} 个子任务",
+    "subtasksSummary": "{{done}} 个已完成，{{pending}} 个待办，{{inProgress}} 个进行中",
+    "status": {
+      "done": "已完成",
+      "inProgress": "进行中",
+      "review": "审核中",
+      "deferred": "已延期",
+      "cancelled": "已取消",
+      "pending": "待办"
+    },
+    "priority": {
+      "high": "高优先级",
+      "medium": "中优先级",
+      "low": "低优先级",
+      "notSet": "未设置优先级"
+    }
+  },
+  "taskDetail": {
+    "task": "任务",
+    "taskId": "任务 ID",
+    "copyTaskId": "点击复制任务 ID",
+    "subtaskOf": "任务 {{id}} 的子任务",
+    "taskTitlePlaceholder": "任务标题",
+    "saving": "保存中...",
+    "saveChanges": "保存更改",
+    "cancelEditing": "取消编辑",
+    "editTask": "编辑任务",
+    "statusLabel": "状态",
+    "priorityLabel": "优先级",
+    "dependenciesLabel": "依赖",
+    "descriptionLabel": "描述",
+    "notSet": "未设置",
+    "noDependencies": "无依赖",
+    "clickToViewTask": "点击查看任务 {{id}}",
+    "descriptionPlaceholder": "任务描述",
+    "noDescription": "暂无描述",
+    "implementationDetails": "实施细节",
+    "implementationDetailsPlaceholder": "实施细节",
+    "testStrategy": "测试策略",
+    "subtasks": "子任务 ({{count}})",
+    "status": {
+      "pending": "待办",
+      "inProgress": "进行中",
+      "review": "审核中",
+      "done": "已完成",
+      "deferred": "已延期",
+      "cancelled": "已取消"
+    }
+  },
+  "taskList": {
+    "searchPlaceholder": "搜索任务...",
+    "filters": "筛选",
+    "addPrd": "添加 PRD",
+    "addTask": "添加任务",
+    "addTaskTitle": "添加新任务",
+    "createPrdTitle": "创建产品需求文档",
+    "prds": "PRD",
+    "createNewPrd": "创建新 PRD",
+    "existingPrds": "现有 PRD",
+    "helpGuide": "TaskMaster 入门指南",
+    "noMatchingTasks": "没有匹配的任务",
+    "tryAdjustingFilters": "请尝试调整搜索或筛选条件。",
+    "showingTasks": "显示 {{filtered}}/{{total}} 个任务",
+    "clearFilters": "清除筛选",
+    "views": {
+      "kanban": "看板视图",
+      "list": "列表视图",
+      "grid": "网格视图"
+    },
+    "filterLabels": {
+      "status": "状态",
+      "priority": "优先级",
+      "sortBy": "排序方式",
+      "allStatuses": "全部状态",
+      "allPriorities": "全部优先级"
+    },
+    "sortOptions": {
+      "idAsc": "ID（升序）",
+      "idDesc": "ID（降序）",
+      "titleAsc": "标题（A-Z）",
+      "titleDesc": "标题（Z-A）",
+      "statusAsc": "状态（待办优先）",
+      "statusDesc": "状态（已完成优先）",
+      "priorityAsc": "优先级（高优先）",
+      "priorityDesc": "优先级（低优先）"
+    },
+    "kanban": {
+      "toDo": "📋 待办",
+      "inProgress": "🚀 进行中",
+      "done": "✅ 已完成",
+      "blocked": "🚫 已阻塞",
+      "deferred": "⏳ 已延期",
+      "cancelled": "❌ 已取消",
+      "noTasksYet": "暂无任务",
+      "emptyPending": "任务将显示在这里",
+      "emptyInProgress": "开始任务后移动到这里",
+      "emptyDone": "已完成的任务显示在这里",
+      "emptyDefault": "此状态的任务将显示在这里"
+    },
+    "notConfigured": {
+      "title": "TaskMaster AI 尚未配置",
+      "description": "TaskMaster 通过 AI 辅助帮助您将复杂项目分解为可管理的任务",
+      "whatIs": "🎯 什么是 TaskMaster？",
+      "initButton": "初始化 TaskMaster AI",
+      "features": {
+        "aiPowered": "AI 驱动的任务管理",
+        "aiPoweredDesc": "将复杂项目分解为可管理的子任务",
+        "prdTemplates": "PRD 模板",
+        "prdTemplatesDesc": "从产品需求文档生成任务",
+        "dependency": "依赖关系追踪",
+        "dependencyDesc": "理解任务关系和执行顺序",
+        "progress": "进度可视化",
+        "progressDesc": "看板和详细的任务分析",
+        "cli": "CLI 集成",
+        "cliDesc": "使用 taskmaster 命令进行高级工作流"
+      }
+    },
+    "gettingStarted": {
+      "title": "TaskMaster 入门指南",
+      "subtitle": "TaskMaster 已初始化！接下来的步骤：",
+      "tip": "从 PRD 开始，充分利用 TaskMaster 的 AI 驱动任务生成功能",
+      "step1": {
+        "title": "创建产品需求文档（PRD）",
+        "desc": "讨论您的项目想法并创建描述您想要构建内容的 PRD。"
+      },
+      "step2": {
+        "title": "从 PRD 生成任务",
+        "desc": "创建 PRD 后，让您的 AI 助手解析它，TaskMaster 将自动将其分解为包含实施细节的可管理任务。"
+      },
+      "step3": {
+        "title": "分析和展开任务",
+        "desc": "让您的 AI 助手分析任务复杂度并将其展开为详细的子任务，以便更容易实施。"
+      },
+      "step4": {
+        "title": "开始构建",
+        "desc": "让您的 AI 助手开始处理任务、更新任务状态，并随着项目发展添加新任务。"
+      }
+    },
+    "setupModal": {
+      "title": "TaskMaster 设置",
+      "subtitle": "{{project}} 的交互式 CLI",
+      "completed": "TaskMaster 设置完成！您现在可以关闭此窗口。",
+      "autoStart": "TaskMaster 初始化将自动开始",
+      "closeAndContinue": "关闭并继续"
+    },
+    "helpModal": {
+      "title": "TaskMaster 入门指南",
+      "subtitle": "高效任务管理指南",
+      "exampleLabel": "💬 示例：",
+      "viewMoreExamples": "查看更多示例和使用模式 →",
+      "step1": {
+        "title": "创建产品需求文档（PRD）",
+        "desc": "讨论您的项目想法并创建描述您想要构建内容的 PRD。"
+      },
+      "step2": {
+        "title": "从 PRD 生成任务",
+        "desc": "创建 PRD 后，让您的 AI 助手解析它，TaskMaster 将自动将其分解为包含实施细节的可管理任务。",
+        "example": "我刚刚用 Claude Task Master 初始化了一个新项目。我在 .taskmaster/docs/prd.txt 有一个 PRD。你能帮我解析它并设置初始任务吗？"
+      },
+      "step3": {
+        "title": "分析和展开任务",
+        "desc": "让您的 AI 助手分析任务复杂度并将其展开为详细的子任务，以便更容易实施。",
+        "example": "任务 5 看起来很复杂。你能把它分解成子任务吗？"
+      },
+      "step4": {
+        "title": "开始构建",
+        "desc": "让您的 AI 助手开始处理任务、更新任务状态，并随着项目发展添加新任务。",
+        "example": "请添加一个使用 Cloudinary 实现用户头像上传的新任务，研究最佳方案。"
+      },
+      "proTips": {
+        "title": "💡 专业提示",
+        "tip1": "使用搜索栏快速查找特定任务",
+        "tip2": "使用视图切换按钮在看板、列表和网格视图之间切换",
+        "tip3": "使用筛选器专注于特定的任务状态或优先级",
+        "tip4": "点击任何任务查看详细信息并管理子任务"
+      },
+      "learnMore": {
+        "title": "📚 了解更多",
+        "desc": "TaskMaster AI 是为开发者构建的先进任务管理系统。获取文档、示例并参与项目贡献。",
+        "viewGithub": "在 GitHub 上查看"
+      }
+    }
+  },
+  "nextTaskBanner": {
+    "notConfigured": {
+      "title": "TaskMaster AI 尚未配置",
+      "initButton": "初始化 TaskMaster AI"
+    },
+    "whatIs": {
+      "title": "🎯 什么是 TaskMaster？",
+      "features": {
+        "aiPowered": {
+          "title": "AI 驱动的任务管理：",
+          "desc": "将复杂项目分解为可管理的子任务"
+        },
+        "prdTemplates": {
+          "title": "PRD 模板：",
+          "desc": "从产品需求文档生成任务"
+        },
+        "dependencyTracking": {
+          "title": "依赖关系追踪：",
+          "desc": "理解任务关系和执行顺序"
+        },
+        "progressVisualization": {
+          "title": "进度可视化：",
+          "desc": "看板和详细的任务分析"
+        },
+        "cliIntegration": {
+          "title": "CLI 集成：",
+          "desc": "使用 taskmaster 命令进行高级工作流"
+        }
+      }
+    },
+    "initTaskMaster": "初始化 TaskMaster",
+    "addMoreTasks": {
+      "title": "添加更多任务：",
+      "desc": "手动创建任务或从 PRD 模板生成任务"
+    },
+    "createTaskManually": "手动创建新任务",
+    "parsing": "解析中...",
+    "generateFromPRD": "从 PRD 模板生成任务",
+    "task": "任务",
+    "priority": {
+      "high": "高优先级",
+      "medium": "中优先级",
+      "low": "低优先级"
+    },
+    "startTask": "开始任务",
+    "viewDetails": "查看任务详情",
+    "viewAllTasks": "查看所有任务",
+    "allDone": "全部完成！🎉",
+    "noPendingTasks": "无待处理任务",
+    "review": "查看",
+    "cliModal": {
+      "title": "TaskMaster 设置",
+      "subtitle": "{{project}} 的交互式 CLI",
+      "autoStart": "TaskMaster 初始化将自动开始",
+      "close": "关闭"
+    },
+    "createTaskModal": {
+      "title": "创建新任务",
+      "useAI": "使用 AI 生成任务详情",
+      "aiDescription": "任务描述（AI 将生成详情）",
+      "aiPlaceholder": "描述您想要完成的事情...",
+      "taskTitle": "任务标题",
+      "titlePlaceholder": "输入任务标题...",
+      "description": "描述",
+      "descriptionPlaceholder": "描述任务...",
+      "priorityLabel": "优先级",
+      "priorityLow": "低",
+      "priorityMedium": "中",
+      "priorityHigh": "高",
+      "cancel": "取消",
+      "creating": "创建中...",
+      "create": "创建任务"
+    },
+    "templateSelector": {
+      "loading": "加载模板中...",
+      "selectTitle": "选择 PRD 模板",
+      "customizeTitle": "自定义模板",
+      "generatingTitle": "生成任务中",
+      "fileName": "文件名",
+      "customizeLabel": "自定义模板",
+      "enterPlaceholder": "输入 {{field}}",
+      "back": "返回",
+      "applying": "应用中...",
+      "applyGenerate": "应用并生成任务",
+      "success": "模板应用成功！",
+      "generating": "您的 PRD 已创建，正在生成任务..."
+    }
   }
 }

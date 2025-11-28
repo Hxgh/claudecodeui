@@ -14,7 +14,7 @@
 ```javascript
 // Line 495, 505
 "AI coding assistant interface"
-→ "AI 编程助手界面"
+→ "AI 编程GUI工具"
 ```
 
 #### 按钮文本
@@ -42,7 +42,7 @@
 
 // zh.json
 "app": {
-  "description": "AI 编程助手界面",
+  "description": "AI 编程GUI工具",
   "shortDescription": "AI 助手"
 }
 ```
@@ -184,7 +184,7 @@ placeholder={t('chat.placeholder', { provider })}
 
 | 组件 | 键名 | 英文 | 中文 | 优先级 |
 |------|------|------|------|--------|
-| app | description | AI coding assistant interface | AI 编程助手界面 | ⭐⭐⭐ |
+| app | description | AI coding assistant interface | AI 编程GUI工具 | ⭐⭐⭐ |
 | chat | clearInput | Clear input | 清空输入 | ⭐⭐⭐ |
 | chat | scrollToBottom | Scroll to bottom | 滚动到底部 | ⭐⭐ |
 | chat | dropImagesHere | Drop images here | 拖放图片到此处 | ⭐⭐ |
@@ -230,7 +230,7 @@ placeholder={t('chat.placeholder', { provider })}
 ```json
 {
   "app": {
-    "description": "AI 编程助手界面"
+    "description": "AI 编程GUI工具"
   },
   "chat": {
     "placeholder": "输入 / 查看命令，@ 引用文件，或向 {{provider}} 提问...",
@@ -355,7 +355,7 @@ placeholder={t('chat.placeholder', { provider: provider === 'cursor' ? 'Cursor' 
 完成这些最后的翻译后，用户将看到：
 
 ✅ **侧边栏完全中文化**
-- 应用描述："AI 编程助手界面"
+- 应用描述："AI 编程GUI工具"
 - 按钮："新建项目"、"新建会话"、"设置"
 
 ✅ **聊天界面完全中文化**

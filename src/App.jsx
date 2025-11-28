@@ -19,6 +19,7 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useParams } from 'react-router-dom';
 import { Settings as SettingsIcon, Sparkles } from 'lucide-react';
 import Sidebar from './components/Sidebar';
@@ -40,6 +41,7 @@ import { api, authenticatedFetch } from './utils/api';
 
 // Main App component with routing
 function AppContent() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { sessionId } = useParams();
   
@@ -575,7 +577,7 @@ function AppContent() {
 
     const handleUpdateNow = async () => {
       setIsUpdating(true);
-      setUpdateOutput('Starting update...\n');
+      setUpdateOutput(t('versionUpdate.startingUpdate') + '\n');
       setUpdateError('');
 
       try {
@@ -588,15 +590,15 @@ function AppContent() {
 
         if (response.ok) {
           setUpdateOutput(prev => prev + data.output + '\n');
-          setUpdateOutput(prev => prev + '\n✅ Update completed successfully!\n');
-          setUpdateOutput(prev => prev + 'Please restart the server to apply changes.\n');
+          setUpdateOutput(prev => prev + '\n✅ ' + t('versionUpdate.updateSuccess') + '\n');
+          setUpdateOutput(prev => prev + t('versionUpdate.restartHint') + '\n');
         } else {
           setUpdateError(data.error || 'Update failed');
-          setUpdateOutput(prev => prev + '\n❌ Update failed: ' + (data.error || 'Unknown error') + '\n');
+          setUpdateOutput(prev => prev + '\n❌ ' + t('versionUpdate.updateFailed') + ' ' + (data.error || 'Unknown error') + '\n');
         }
       } catch (error) {
         setUpdateError(error.message);
-        setUpdateOutput(prev => prev + '\n❌ Update failed: ' + error.message + '\n');
+        setUpdateOutput(prev => prev + '\n❌ ' + t('versionUpdate.updateFailed') + ' ' + error.message + '\n');
       } finally {
         setIsUpdating(false);
       }
@@ -622,9 +624,9 @@ function AppContent() {
                 </svg>
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Update Available</h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('versionUpdate.updateAvailable')}</h2>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {releaseInfo?.title || 'A new version is ready'}
+                  {releaseInfo?.title || t('versionUpdate.newVersionReady')}
                 </p>
               </div>
             </div>
@@ -641,11 +643,11 @@ function AppContent() {
           {/* Version Info */}
           <div className="space-y-3">
             <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Current Version</span>
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('versionUpdate.currentVersion')}</span>
               <span className="text-sm text-gray-900 dark:text-white font-mono">{currentVersion}</span>
             </div>
             <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
-              <span className="text-sm font-medium text-blue-700 dark:text-blue-300">Latest Version</span>
+              <span className="text-sm font-medium text-blue-700 dark:text-blue-300">{t('versionUpdate.latestVersion')}</span>
               <span className="text-sm text-blue-900 dark:text-blue-100 font-mono">{latestVersion}</span>
             </div>
           </div>
@@ -654,7 +656,7 @@ function AppContent() {
           {releaseInfo?.body && (
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-medium text-gray-900 dark:text-white">What's New:</h3>
+                <h3 className="text-sm font-medium text-gray-900 dark:text-white">{t('versionUpdate.whatsNew')}</h3>
                 {releaseInfo?.htmlUrl && (
                   <a
                     href={releaseInfo.htmlUrl}
@@ -662,7 +664,7 @@ function AppContent() {
                     rel="noopener noreferrer"
                     className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline flex items-center gap-1"
                   >
-                    View full release
+                    {t('versionUpdate.viewFullRelease')}
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
@@ -680,7 +682,7 @@ function AppContent() {
           {/* Update Output */}
           {updateOutput && (
             <div className="space-y-2">
-              <h3 className="text-sm font-medium text-gray-900 dark:text-white">Update Progress:</h3>
+              <h3 className="text-sm font-medium text-gray-900 dark:text-white">{t('versionUpdate.updateProgress')}</h3>
               <div className="bg-gray-900 dark:bg-gray-950 rounded-lg p-4 border border-gray-700 max-h-48 overflow-y-auto">
                 <pre className="text-xs text-green-400 font-mono whitespace-pre-wrap">{updateOutput}</pre>
               </div>
@@ -690,14 +692,14 @@ function AppContent() {
           {/* Upgrade Instructions */}
           {!isUpdating && !updateOutput && (
             <div className="space-y-3">
-              <h3 className="text-sm font-medium text-gray-900 dark:text-white">Manual upgrade:</h3>
+              <h3 className="text-sm font-medium text-gray-900 dark:text-white">{t('versionUpdate.manualUpgrade')}</h3>
               <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 border">
                 <code className="text-sm text-gray-800 dark:text-gray-200 font-mono">
-                  git checkout main && git pull && npm install
+                  {t('versionUpdate.upgradeCommand')}
                 </code>
               </div>
               <p className="text-xs text-gray-600 dark:text-gray-400">
-                Or click "Update Now" to run the update automatically.
+                {t('versionUpdate.upgradeHint')}
               </p>
             </div>
           )}
@@ -708,7 +710,7 @@ function AppContent() {
               onClick={() => setShowVersionModal(false)}
               className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md transition-colors"
             >
-              {updateOutput ? 'Close' : 'Later'}
+              {updateOutput ? t('common.close') : t('versionUpdate.later')}
             </button>
             {!updateOutput && (
               <>
@@ -718,7 +720,7 @@ function AppContent() {
                   }}
                   className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md transition-colors"
                 >
-                  Copy Command
+                  {t('versionUpdate.copyCommand')}
                 </button>
                 <button
                   onClick={handleUpdateNow}
@@ -728,10 +730,10 @@ function AppContent() {
                   {isUpdating ? (
                     <>
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      Updating...
+                      {t('versionUpdate.updating')}
                     </>
                   ) : (
-                    'Update Now'
+                    t('versionUpdate.updateNow')
                   )}
                 </button>
               </>
@@ -781,8 +783,8 @@ function AppContent() {
                 <button
                   onClick={() => setSidebarVisible(true)}
                   className="p-2 hover:bg-accent rounded-md transition-colors duration-200 group"
-                  aria-label="Show sidebar"
-                  title="Show sidebar"
+                  aria-label={t('versionUpdate.showSidebar')}
+                  title={t('versionUpdate.showSidebar')}
                 >
                   <svg
                     className="w-5 h-5 text-foreground group-hover:scale-110 transition-transform"

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, FolderPlus, GitBranch, Key, ChevronRight, ChevronLeft, Check, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { api } from '../utils/api';
 
 const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
+  const { t } = useTranslation();
   // Wizard state
   const [step, setStep] = useState(1); // 1: Choose type, 2: Configure, 3: Confirm
   const [workspaceType, setWorkspaceType] = useState(null); // 'existing' or 'new'
@@ -88,13 +90,13 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
 
     if (step === 1) {
       if (!workspaceType) {
-        setError('Please select whether you have an existing workspace or want to create a new one');
+        setError(t('projectWizard.selectTypeError'));
         return;
       }
       setStep(2);
     } else if (step === 2) {
       if (!workspacePath.trim()) {
-        setError('Please provide a workspace path');
+        setError(t('projectWizard.providePathError'));
         return;
       }
 
@@ -165,7 +167,7 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
               <FolderPlus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Create New Project
+              {t('projectWizard.title')}
             </h3>
           </div>
           <button
@@ -195,7 +197,7 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                     {s < step ? <Check className="w-4 h-4" /> : s}
                   </div>
                   <span className="text-sm font-medium text-gray-700 dark:text-gray-300 hidden sm:inline">
-                    {s === 1 ? 'Type' : s === 2 ? 'Configure' : 'Confirm'}
+                    {s === 1 ? t('projectWizard.steps.type') : s === 2 ? t('projectWizard.steps.configure') : t('projectWizard.steps.confirm')}
                   </span>
                 </div>
                 {s < 3 && (
@@ -227,7 +229,7 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
             <div className="space-y-4">
               <div>
                 <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                  Do you already have a workspace, or would you like to create a new one?
+                  {t('projectWizard.chooseTypeQuestion')}
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Existing Workspace */}
@@ -245,10 +247,10 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                       </div>
                       <div className="flex-1">
                         <h5 className="font-semibold text-gray-900 dark:text-white mb-1">
-                          Existing Workspace
+                          {t('projectWizard.existingWorkspace')}
                         </h5>
                         <p className="text-sm text-gray-600 dark:text-gray-400">
-                          I already have a workspace on my server and just need to add it to the project list
+                          {t('projectWizard.existingWorkspaceDesc')}
                         </p>
                       </div>
                     </div>
@@ -269,10 +271,10 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                       </div>
                       <div className="flex-1">
                         <h5 className="font-semibold text-gray-900 dark:text-white mb-1">
-                          New Workspace
+                          {t('projectWizard.newWorkspace')}
                         </h5>
                         <p className="text-sm text-gray-600 dark:text-gray-400">
-                          Create a new workspace, optionally clone from a GitHub repository
+                          {t('projectWizard.newWorkspaceDesc')}
                         </p>
                       </div>
                     </div>
@@ -288,14 +290,14 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
               {/* Workspace Path */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  {workspaceType === 'existing' ? 'Workspace Path' : 'Where should the workspace be created?'}
+                  {workspaceType === 'existing' ? t('projectWizard.workspacePath') : t('projectWizard.whereCreateWorkspace')}
                 </label>
                 <div className="relative">
                   <Input
                     type="text"
                     value={workspacePath}
                     onChange={(e) => setWorkspacePath(e.target.value)}
-                    placeholder={workspaceType === 'existing' ? '/path/to/existing/workspace' : '/path/to/new/workspace'}
+                    placeholder={workspaceType === 'existing' ? t('projectWizard.existingPathPlaceholder') : t('projectWizard.newPathPlaceholder')}
                     className="w-full"
                   />
                   {showPathDropdown && pathSuggestions.length > 0 && (
@@ -315,8 +317,8 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                 </div>
                 <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                   {workspaceType === 'existing'
-                    ? 'Full path to your existing workspace directory'
-                    : 'Full path where the new workspace will be created'}
+                    ? t('projectWizard.existingPathHint')
+                    : t('projectWizard.newPathHint')}
                 </p>
               </div>
 
@@ -325,17 +327,17 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                 <>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      GitHub URL (Optional)
+                      {t('projectWizard.githubUrlOptional')}
                     </label>
                     <Input
                       type="text"
                       value={githubUrl}
                       onChange={(e) => setGithubUrl(e.target.value)}
-                      placeholder="https://github.com/username/repository"
+                      placeholder={t('projectWizard.githubUrlPlaceholder')}
                       className="w-full"
                     />
                     <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                      Leave empty to create an empty workspace, or provide a GitHub URL to clone
+                      {t('projectWizard.githubUrlHint')}
                     </p>
                   </div>
 
@@ -346,10 +348,10 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                         <Key className="w-5 h-5 text-gray-600 dark:text-gray-400 flex-shrink-0 mt-0.5" />
                         <div className="flex-1">
                           <h5 className="font-medium text-gray-900 dark:text-white mb-1">
-                            GitHub Authentication (Optional)
+                            {t('projectWizard.githubAuthOptional')}
                           </h5>
                           <p className="text-sm text-gray-600 dark:text-gray-400">
-                            Only required for private repositories. Public repos can be cloned without authentication.
+                            {t('projectWizard.githubAuthHint')}
                           </p>
                         </div>
                       </div>
@@ -357,7 +359,7 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                       {loadingTokens ? (
                         <div className="flex items-center gap-2 text-sm text-gray-500">
                           <Loader2 className="w-4 h-4 animate-spin" />
-                          Loading stored tokens...
+                          {t('projectWizard.loadingTokens')}
                         </div>
                       ) : availableTokens.length > 0 ? (
                         <>
@@ -371,7 +373,7 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                                   : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                               }`}
                             >
-                              Stored Token
+                              {t('projectWizard.storedToken')}
                             </button>
                             <button
                               onClick={() => setTokenMode('new')}
@@ -381,7 +383,7 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                                   : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                               }`}
                             >
-                              New Token
+                              {t('projectWizard.newToken')}
                             </button>
                             <button
                               onClick={() => {
@@ -395,21 +397,21 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                                   : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                               }`}
                             >
-                              None (Public)
+                              {t('projectWizard.nonePublic')}
                             </button>
                           </div>
 
                           {tokenMode === 'stored' ? (
                             <div>
                               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                Select Token
+                                {t('projectWizard.selectToken')}
                               </label>
                               <select
                                 value={selectedGithubToken}
                                 onChange={(e) => setSelectedGithubToken(e.target.value)}
                                 className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-sm"
                               >
-                                <option value="">-- Select a token --</option>
+                                <option value="">{t('projectWizard.selectTokenPlaceholder')}</option>
                                 {availableTokens.map((token) => (
                                   <option key={token.id} value={token.id}>
                                     {token.credential_name}
@@ -420,7 +422,7 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                           ) : tokenMode === 'new' ? (
                             <div>
                               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                GitHub Token
+                                {t('projectWizard.githubToken')}
                               </label>
                               <Input
                                 type="password"
@@ -430,7 +432,7 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                                 className="w-full"
                               />
                               <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                This token will be used only for this operation
+                                {t('projectWizard.tokenForOperation')}
                               </p>
                             </div>
                           ) : null}
@@ -438,24 +440,22 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                       ) : (
                         <div className="space-y-4">
                           <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 border border-blue-200 dark:border-blue-800">
-                            <p className="text-sm text-blue-800 dark:text-blue-200">
-                              💡 <strong>Public repositories</strong> don't require authentication. You can skip providing a token if cloning a public repo.
-                            </p>
+                            <p className="text-sm text-blue-800 dark:text-blue-200" dangerouslySetInnerHTML={{ __html: t('projectWizard.publicRepoTip') }} />
                           </div>
 
                           <div>
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                              GitHub Token (Optional for Public Repos)
+                              {t('projectWizard.tokenOptionalForPublic')}
                             </label>
                             <Input
                               type="password"
                               value={newGithubToken}
                               onChange={(e) => setNewGithubToken(e.target.value)}
-                              placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (leave empty for public repos)"
+                              placeholder={t('projectWizard.tokenPlaceholderOptional')}
                               className="w-full"
                             />
                             <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                              No stored tokens available. You can add tokens in Settings → API Keys for easier reuse.
+                              {t('projectWizard.noStoredTokensHint')}
                             </p>
                           </div>
                         </div>
@@ -472,17 +472,17 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
             <div className="space-y-4">
               <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
                 <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">
-                  Review Your Configuration
+                  {t('projectWizard.reviewConfig')}
                 </h4>
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">Workspace Type:</span>
+                    <span className="text-gray-600 dark:text-gray-400">{t('projectWizard.workspaceType')}:</span>
                     <span className="font-medium text-gray-900 dark:text-white">
-                      {workspaceType === 'existing' ? 'Existing Workspace' : 'New Workspace'}
+                      {workspaceType === 'existing' ? t('projectWizard.existingWorkspace') : t('projectWizard.newWorkspace')}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">Path:</span>
+                    <span className="text-gray-600 dark:text-gray-400">{t('projectWizard.path')}:</span>
                     <span className="font-mono text-xs text-gray-900 dark:text-white break-all">
                       {workspacePath}
                     </span>
@@ -490,19 +490,19 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
                   {workspaceType === 'new' && githubUrl && (
                     <>
                       <div className="flex justify-between text-sm">
-                        <span className="text-gray-600 dark:text-gray-400">Clone From:</span>
+                        <span className="text-gray-600 dark:text-gray-400">{t('projectWizard.cloneFrom')}:</span>
                         <span className="font-mono text-xs text-gray-900 dark:text-white break-all">
                           {githubUrl}
                         </span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-gray-600 dark:text-gray-400">Authentication:</span>
+                        <span className="text-gray-600 dark:text-gray-400">{t('projectWizard.authentication')}:</span>
                         <span className="text-xs text-gray-900 dark:text-white">
                           {tokenMode === 'stored' && selectedGithubToken
-                            ? `Using stored token: ${availableTokens.find(t => t.id.toString() === selectedGithubToken)?.credential_name || 'Unknown'}`
+                            ? t('projectWizard.usingStoredToken', { name: availableTokens.find(tk => tk.id.toString() === selectedGithubToken)?.credential_name || 'Unknown' })
                             : tokenMode === 'new' && newGithubToken
-                            ? 'Using provided token'
-                            : 'No authentication'}
+                            ? t('projectWizard.usingProvidedToken')
+                            : t('projectWizard.noAuthentication')}
                         </span>
                       </div>
                     </>
@@ -513,10 +513,10 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
               <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
                 <p className="text-sm text-blue-800 dark:text-blue-200">
                   {workspaceType === 'existing'
-                    ? 'The workspace will be added to your project list and will be available for Claude/Cursor sessions.'
+                    ? t('projectWizard.confirmExistingMsg')
                     : githubUrl
-                    ? 'A new workspace will be created and the repository will be cloned from GitHub.'
-                    : 'An empty workspace directory will be created at the specified path.'}
+                    ? t('projectWizard.confirmNewGithubMsg')
+                    : t('projectWizard.confirmNewEmptyMsg')}
                 </p>
               </div>
             </div>
@@ -531,11 +531,11 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
             disabled={isCreating}
           >
             {step === 1 ? (
-              'Cancel'
+              t('common.cancel')
             ) : (
               <>
                 <ChevronLeft className="w-4 h-4 mr-1" />
-                Back
+                {t('common.back')}
               </>
             )}
           </Button>
@@ -547,16 +547,16 @@ const ProjectCreationWizard = ({ onClose, onProjectCreated }) => {
             {isCreating ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Creating...
+                {t('projectWizard.creating')}
               </>
             ) : step === 3 ? (
               <>
                 <Check className="w-4 h-4 mr-1" />
-                Create Project
+                {t('projectWizard.createProject')}
               </>
             ) : (
               <>
-                Next
+                {t('common.next')}
                 <ChevronRight className="w-4 h-4 ml-1" />
               </>
             )}

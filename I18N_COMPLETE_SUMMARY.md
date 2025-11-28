@@ -97,7 +97,7 @@
   "tryAdjustingSearch": "请尝试调整搜索词",
   "renameProjectF2": "重命名项目 (F2)",
   "deleteEmptyProject": "删除空项目 (Delete)",
-  "aiCodingAssistant": "AI 编程助手界面",
+  "aiCodingAssistant": "AI 编程GUI工具",
   "settings": "设置",
   "timeAgo": { /* 8 个时间键 */ }
 }
@@ -331,7 +331,7 @@ TaskMaster 相关的所有文本
 #### 1. Sidebar 核心按钮
 ```javascript
 // Sidebar.jsx
-Line 495, 505: "AI coding assistant interface" → "AI 编程助手界面"
+Line 495, 505: "AI coding assistant interface" → "AI 编程GUI工具"
 Line 619: "New Project" → "新建项目"
 Line 1026, 1218, 1278, 1289: "New Session" → "新建会话"
 Line 1359, 1370: "Settings" → "设置"
@@ -480,7 +480,7 @@ if (!confirm(t('confirmDialogs.deleteApiKey'))) return;
 ## ✨ 完成后的用户体验
 
 ### 侧边栏
-✅ "AI 编程助手界面"
+✅ "AI 编程GUI工具"
 ✅ "新建项目" / "新建会话"
 ✅ "设置"
 ✅ 所有项目和会话操作按钮

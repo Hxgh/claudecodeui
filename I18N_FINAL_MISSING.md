@@ -16,7 +16,7 @@
 <p className="text-sm text-muted-foreground">AI coding assistant interface</p>
 
 // 翻译
-→ "AI 编程助手界面"
+→ "AI 编程GUI工具"
 ```
 
 #### "New Project" (按钮文本)
@@ -193,7 +193,7 @@ Default Mode
 {
   "sidebar": {
     // ... existing keys ...
-    "aiCodingAssistant": "AI 编程助手界面",
+    "aiCodingAssistant": "AI 编程GUI工具",
     "newProject": "新建项目",
     "newSession": "新建会话",
     "settings": "设置"
@@ -391,7 +391,7 @@ Default Mode
 用户切换到中文后将看到：
 
 ### 侧边栏
-- ✨ "AI 编程助手界面"
+- ✨ "AI 编程GUI工具"
 - ✨ "新建项目" 按钮
 - ✨ "新建会话" 按钮
 - ✨ "设置" 按钮

@@ -1,4 +1,5 @@
 import React from 'react';
+import i18n from '../i18n';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -35,14 +36,14 @@ class ErrorBoundary extends React.Component {
                 </svg>
               </div>
               <h3 className="ml-3 text-sm font-medium text-red-800">
-                Something went wrong
+                {i18n.t('errorBoundary.somethingWentWrong')}
               </h3>
             </div>
             <div className="text-sm text-red-700">
-              <p className="mb-2">An error occurred while loading the chat interface.</p>
+              <p className="mb-2">{i18n.t('errorBoundary.errorOccurred')}</p>
               {this.props.showDetails && this.state.error && (
                 <details className="mt-4">
-                  <summary className="cursor-pointer text-xs font-mono">Error Details</summary>
+                  <summary className="cursor-pointer text-xs font-mono">{i18n.t('errorBoundary.errorDetails')}</summary>
                   <pre className="mt-2 text-xs bg-red-100 p-2 rounded overflow-auto max-h-40">
                     {this.state.error.toString()}
                     {this.state.errorInfo && this.state.errorInfo.componentStack}
@@ -58,7 +59,7 @@ class ErrorBoundary extends React.Component {
                 }}
                 className="bg-red-600 text-white px-4 py-2 rounded text-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
               >
-                Try Again
+                {i18n.t('errorBoundary.tryAgain')}
               </button>
             </div>
           </div>
