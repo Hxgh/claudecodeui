@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
 import StandaloneShell from './StandaloneShell';
 
@@ -20,6 +21,8 @@ function LoginModal({
   onComplete,
   customCommand
 }) {
+  const { t } = useTranslation();
+
   if (!isOpen) return null;
 
   const getCommand = () => {
@@ -38,11 +41,11 @@ function LoginModal({
   const getTitle = () => {
     switch (provider) {
       case 'claude':
-        return 'Claude CLI Login';
+        return t('login.claudeCliLogin');
       case 'cursor':
-        return 'Cursor CLI Login';
+        return t('login.cursorCliLogin');
       default:
-        return 'CLI Login';
+        return t('login.cliLogin');
     }
   };
 

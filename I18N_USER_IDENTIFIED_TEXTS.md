@@ -392,7 +392,7 @@ Show TaskMaster tasks, banners, and sidebar indicators across the interface
 
 // Line 495, 505
 "AI coding assistant interface"
-→ "AI 编程助手界面"
+→ "AI 编程GUI工具"
 
 // Line 619
 "new project"

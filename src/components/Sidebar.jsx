@@ -492,7 +492,7 @@ function Sidebar({
               </div>
               <div>
                 <h1 className="text-lg font-bold text-foreground">Claude Code UI</h1>
-                <p className="text-sm text-muted-foreground">AI coding assistant interface</p>
+                <p className="text-sm text-muted-foreground">{t('sidebar.aiCodingAssistant')}</p>
               </div>
             </a>
           ) : (
@@ -502,7 +502,7 @@ function Sidebar({
               </div>
               <div>
                 <h1 className="text-lg font-bold text-foreground">Claude Code UI</h1>
-                <p className="text-sm text-muted-foreground">AI coding assistant interface</p>
+                <p className="text-sm text-muted-foreground">{t('sidebar.aiCodingAssistant')}</p>
               </div>
             </div>
           )}
@@ -613,10 +613,10 @@ function Sidebar({
                 size="sm"
                 className="flex-1 h-8 text-xs bg-primary hover:bg-primary/90 transition-all duration-200"
                 onClick={() => setShowNewProject(true)}
-                title="Create new project (Ctrl+N)"
+                title={t('sidebar.newProject') + ' (Ctrl+N)'}
               >
                 <FolderPlus className="w-3.5 h-3.5 mr-1.5" />
-                New Project
+                {t('sidebar.newProject')}
               </Button>
               <Button
                 variant="outline"
@@ -631,7 +631,7 @@ function Sidebar({
                   }
                 }}
                 disabled={isRefreshing}
-                title="Refresh projects and sessions (Ctrl+R)"
+                title={t('common.refresh') + ' (Ctrl+R)'}
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''} group-hover:rotate-180 transition-transform duration-300`} />
               </Button>
@@ -1023,7 +1023,7 @@ function Sidebar({
                           const isActive = diffInMinutes < 10;
                           
                           // Get session display values
-                          const sessionName = isCursorSession ? (session.name || 'Untitled Session') : (session.summary || 'New Session');
+                          const sessionName = isCursorSession ? (session.name || t('sidebar.newSession')) : (session.summary || t('sidebar.newSession'));
                           const sessionTime = isCursorSession ? session.createdAt : session.lastActivity;
                           const messageCount = session.messageCount || 0;
                           
@@ -1215,9 +1215,9 @@ function Sidebar({
                                       onClick={(e) => {
                                         e.stopPropagation();
                                         setEditingSession(session.id);
-                                        setEditingSessionName(session.summary || 'New Session');
+                                        setEditingSessionName(session.summary || t('sidebar.newSession'));
                                       }}
-                                      title="Manually edit session name"
+                                      title={t('sidebar.renameSession')}
                                     >
                                       <Edit2 className="w-3 h-3 text-gray-600 dark:text-gray-400" />
                                     </button>
@@ -1228,7 +1228,7 @@ function Sidebar({
                                         e.stopPropagation();
                                         deleteSession(project.name, session.id);
                                       }}
-                                      title="Delete this session permanently"
+                                      title={t('sidebar.deleteSession')}
                                     >
                                       <Trash2 className="w-3 h-3 text-red-600 dark:text-red-400" />
                                     </button>
@@ -1275,10 +1275,10 @@ function Sidebar({
                           }}
                         >
                           <Plus className="w-3 h-3" />
-                          New Session
+                          {t('sidebar.newSession')}
                         </button>
                       </div>
-                      
+
                       <Button
                         variant="default"
                         size="sm"
@@ -1286,7 +1286,7 @@ function Sidebar({
                         onClick={() => onNewSession(project)}
                       >
                         <Plus className="w-3 h-3" />
-                        New Session
+                        {t('sidebar.newSession')}
                       </Button>
                     </div>
                   )}
@@ -1356,10 +1356,10 @@ function Sidebar({
             <div className="w-10 h-10 rounded-2xl bg-background/80 flex items-center justify-center">
               <Settings className="w-5 h-5 text-muted-foreground" />
             </div>
-            <span className="text-lg font-medium text-foreground">Settings</span>
+            <span className="text-lg font-medium text-foreground">{t('common.settings')}</span>
           </button>
         </div>
-        
+
         {/* Desktop Settings */}
         <Button
           variant="ghost"
@@ -1367,7 +1367,7 @@ function Sidebar({
           onClick={onShowSettings}
         >
           <Settings className="w-3 h-3" />
-          <span className="text-xs">Settings</span>
+          <span className="text-xs">{t('common.settings')}</span>
         </Button>
       </div>
     </div>

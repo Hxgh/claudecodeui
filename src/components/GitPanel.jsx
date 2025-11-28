@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { GitBranch, GitCommit, Plus, Minus, RefreshCw, Check, X, ChevronDown, ChevronRight, Info, History, FileText, Mic, MicOff, Sparkles, Download, RotateCcw, Trash2, AlertTriangle, Upload } from 'lucide-react';
 import { MicButton } from './MicButton.jsx';
 import { authenticatedFetch } from '../utils/api';
 import DiffViewer from './DiffViewer.jsx';
 
 function GitPanel({ selectedProject, isMobile, onFileOpen }) {
+  const { t } = useTranslation();
   const [gitStatus, setGitStatus] = useState(null);
   const [gitDiff, setGitDiff] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -607,10 +609,10 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
 
   const getStatusLabel = (status) => {
     switch (status) {
-      case 'M': return 'Modified';
-      case 'A': return 'Added';
-      case 'D': return 'Deleted';
-      case 'U': return 'Untracked';
+      case 'M': return t('git.modified');
+      case 'A': return t('git.added');
+      case 'D': return t('git.deleted');
+      case 'U': return t('git.untracked');
       default: return status;
     }
   };
@@ -790,7 +792,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
   if (!selectedProject) {
     return (
       <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
-        <p>Select a project to view source control</p>
+        <p>{t('git.selectProject')}</p>
       </div>
     );
   }
@@ -859,7 +861,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                   className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-2"
                 >
                   <Plus className="w-3 h-3" />
-                  <span>Create new branch</span>
+                  <span>{t('git.createNewBranch')}</span>
                 </button>
               </div>
             </div>
@@ -882,7 +884,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                   title={`Publish branch "${currentBranch}" to ${remoteStatus.remoteName}`}
                 >
                   <Upload className={`w-3 h-3 ${isPublishing ? 'animate-pulse' : ''}`} />
-                  <span>{isPublishing ? 'Publishing...' : 'Publish'}</span>
+                  <span>{isPublishing ? t('git.publishing') : t('git.publish')}</span>
                 </button>
               )}
               
@@ -901,7 +903,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                       title={`Pull ${remoteStatus.behind} commit${remoteStatus.behind !== 1 ? 's' : ''} from ${remoteStatus.remoteName}`}
                     >
                       <Download className={`w-3 h-3 ${isPulling ? 'animate-pulse' : ''}`} />
-                      <span>{isPulling ? 'Pulling...' : `Pull ${remoteStatus.behind}`}</span>
+                      <span>{isPulling ? t('git.pulling') : `${t('git.pull')} ${remoteStatus.behind}`}</span>
                     </button>
                   )}
                   
@@ -917,7 +919,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                       title={`Push ${remoteStatus.ahead} commit${remoteStatus.ahead !== 1 ? 's' : ''} to ${remoteStatus.remoteName}`}
                     >
                       <Upload className={`w-3 h-3 ${isPushing ? 'animate-pulse' : ''}`} />
-                      <span>{isPushing ? 'Pushing...' : `Push ${remoteStatus.ahead}`}</span>
+                      <span>{isPushing ? t('git.pushing') : `${t('git.push')} ${remoteStatus.ahead}`}</span>
                     </button>
                   )}
                   
@@ -930,7 +932,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                       title={`Fetch from ${remoteStatus.remoteName}`}
                     >
                       <RefreshCw className={`w-3 h-3 ${isFetching ? 'animate-spin' : ''}`} />
-                      <span>{isFetching ? 'Fetching...' : 'Fetch'}</span>
+                      <span>{isFetching ? t('git.fetching') : t('git.fetch')}</span>
                     </button>
                   )}
                 </>
@@ -984,7 +986,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
             >
               <div className="flex items-center justify-center gap-2">
                 <FileText className="w-4 h-4" />
-                <span>Changes</span>
+                <span>{t('git.changes')}</span>
               </div>
             </button>
             <button
@@ -997,7 +999,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
             >
               <div className="flex items-center justify-center gap-2">
                 <History className="w-4 h-4" />
-                <span>History</span>
+                <span>{t('git.history')}</span>
               </div>
             </button>
           </div>
@@ -1029,7 +1031,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                     {/* Mobile collapse button */}
                     {isMobile && (
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium">Commit Changes</span>
+                        <span className="text-sm font-medium">{t('git.commitChanges')}</span>
                         <button
                           onClick={() => setIsCommitAreaCollapsed(true)}
                           className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
@@ -1044,7 +1046,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                         ref={textareaRef}
                         value={commitMessage}
                         onChange={(e) => setCommitMessage(e.target.value)}
-                        placeholder="Message (Ctrl+Enter to commit)"
+                        placeholder={t('git.commitMessagePlaceholder')}
                         className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 resize-none pr-20"
                         rows="3"
                         onKeyDown={(e) => {
@@ -1058,7 +1060,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                           onClick={generateCommitMessage}
                           disabled={selectedFiles.size === 0 || isGeneratingMessage}
                           className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                          title="Generate commit message"
+                          title={t('git.generateCommitMessage')}
                         >
                           {isGeneratingMessage ? (
                             <RefreshCw className="w-4 h-4 animate-spin" />
@@ -1088,7 +1090,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                         className="px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-1"
                       >
                         <Check className="w-3 h-3" />
-                        <span>{isCommitting ? 'Committing...' : 'Commit'}</span>
+                        <span>{isCommitting ? t('git.committing') : t('git.commit')}</span>
                       </button>
                     </div>
                   </div>
@@ -1121,14 +1123,14 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                   }}
                   className={`text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 ${isMobile ? 'text-xs' : 'text-xs'}`}
                 >
-                  {isMobile ? 'All' : 'Select All'}
+                  {isMobile ? t('git.all') : t('git.selectAll')}
                 </button>
                 <span className="text-gray-300 dark:text-gray-600">|</span>
                 <button
                   onClick={() => setSelectedFiles(new Set())}
                   className={`text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 ${isMobile ? 'text-xs' : 'text-xs'}`}
                 >
-                  {isMobile ? 'None' : 'Deselect All'}
+                  {isMobile ? t('git.none') : t('git.deselectAll')}
                 </button>
               </div>
             </div>
@@ -1142,7 +1144,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                 className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-750 text-xs text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1"
               >
                 <Info className="w-3 h-3" />
-                <span>File Status Guide</span>
+                <span>{t('git.fileStatusGuide')}</span>
                 {showLegend ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
               </button>
               
@@ -1153,25 +1155,25 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                       <span className="inline-flex items-center justify-center w-5 h-5 bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300 rounded border border-yellow-200 dark:border-yellow-800 font-bold text-xs">
                         M
                       </span>
-                      <span className="text-gray-600 dark:text-gray-400 italic">Modified</span>
+                      <span className="text-gray-600 dark:text-gray-400 italic">{t('git.modified')}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="inline-flex items-center justify-center w-5 h-5 bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 rounded border border-green-200 dark:border-green-800 font-bold text-xs">
                         A
                       </span>
-                      <span className="text-gray-600 dark:text-gray-400 italic">Added</span>
+                      <span className="text-gray-600 dark:text-gray-400 italic">{t('git.added')}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="inline-flex items-center justify-center w-5 h-5 bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300 rounded border border-red-200 dark:border-red-800 font-bold text-xs">
                         D
                       </span>
-                      <span className="text-gray-600 dark:text-gray-400 italic">Deleted</span>
+                      <span className="text-gray-600 dark:text-gray-400 italic">{t('git.deleted')}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="inline-flex items-center justify-center w-5 h-5 bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300 rounded border border-gray-300 dark:border-gray-600 font-bold text-xs">
                         U
                       </span>
-                      <span className="text-gray-600 dark:text-gray-400 italic">Untracked</span>
+                      <span className="text-gray-600 dark:text-gray-400 italic">{t('git.untracked')}</span>
                     </div>
                   </div>
                 </div>
@@ -1191,9 +1193,9 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
           ) : gitStatus?.hasCommits === false ? (
             <div className="flex flex-col items-center justify-center p-8 text-center">
               <GitBranch className="w-16 h-16 mb-4 opacity-30 text-gray-400 dark:text-gray-500" />
-              <h3 className="text-lg font-medium mb-2 text-gray-900 dark:text-white">No commits yet</h3>
+              <h3 className="text-lg font-medium mb-2 text-gray-900 dark:text-white">{t('git.noCommitsYet')}</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 max-w-md">
-                This repository doesn't have any commits yet. Create your first commit to start tracking changes.
+                {t('git.noCommitsDesc')}
               </p>
               <button
                 onClick={createInitialCommit}
@@ -1203,12 +1205,12 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                 {isCreatingInitialCommit ? (
                   <>
                     <RefreshCw className="w-4 h-4 animate-spin" />
-                    <span>Creating Initial Commit...</span>
+                    <span>{t('git.creatingInitialCommit')}</span>
                   </>
                 ) : (
                   <>
                     <GitCommit className="w-4 h-4" />
-                    <span>Create Initial Commit</span>
+                    <span>{t('git.createInitialCommit')}</span>
                   </>
                 )}
               </button>
@@ -1216,7 +1218,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
           ) : !gitStatus || (!gitStatus.modified?.length && !gitStatus.added?.length && !gitStatus.deleted?.length && !gitStatus.untracked?.length) ? (
             <div className="flex flex-col items-center justify-center h-32 text-gray-500 dark:text-gray-400">
               <GitCommit className="w-12 h-12 mb-2 opacity-50" />
-              <p className="text-sm">No changes detected</p>
+              <p className="text-sm">{t('git.noChanges')}</p>
             </div>
           ) : (
             <div className={isMobile ? 'pb-4' : ''}>
@@ -1239,7 +1241,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
           ) : recentCommits.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-32 text-gray-500 dark:text-gray-400">
               <History className="w-12 h-12 mb-2 opacity-50" />
-              <p className="text-sm">No commits found</p>
+              <p className="text-sm">{t('git.noCommitsFound')}</p>
             </div>
           ) : (
             <div className={isMobile ? 'pb-4' : ''}>
@@ -1255,10 +1257,10 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
           <div className="fixed inset-0 bg-black bg-opacity-50" onClick={() => setShowNewBranchModal(false)} />
           <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full">
             <div className="p-6">
-              <h3 className="text-lg font-semibold mb-4">Create New Branch</h3>
+              <h3 className="text-lg font-semibold mb-4">{t('git.createNewBranch')}</h3>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Branch Name
+                  {t('git.branchName')}
                 </label>
                 <input
                   type="text"
@@ -1275,7 +1277,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                 />
               </div>
               <div className="text-xs text-gray-500 dark:text-gray-400 mb-4">
-                This will create a new branch from the current branch ({currentBranch})
+                {t('git.branchFromCurrent', { branch: currentBranch })}
               </div>
               <div className="flex justify-end space-x-3">
                 <button
@@ -1285,7 +1287,7 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                   }}
                   className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
                 >
-                  Cancel
+                  {t('git.cancel')}
                 </button>
                 <button
                   onClick={createBranch}
@@ -1295,12 +1297,12 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                   {isCreatingBranch ? (
                     <>
                       <RefreshCw className="w-3 h-3 animate-spin" />
-                      <span>Creating...</span>
+                      <span>{t('git.creating')}</span>
                     </>
                   ) : (
                     <>
                       <Plus className="w-3 h-3" />
-                      <span>Create Branch</span>
+                      <span>{t('git.createBranch')}</span>
                     </>
                   )}
                 </button>
@@ -1325,11 +1327,11 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                   }`} />
                 </div>
                 <h3 className="text-lg font-semibold">
-                  {confirmAction.type === 'discard' ? 'Discard Changes' : 
-                   confirmAction.type === 'delete' ? 'Delete File' :
-                   confirmAction.type === 'commit' ? 'Confirm Commit' : 
-                   confirmAction.type === 'pull' ? 'Confirm Pull' : 
-                   confirmAction.type === 'publish' ? 'Publish Branch' : 'Confirm Push'}
+                  {confirmAction.type === 'discard' ? t('git.discardChanges') :
+                   confirmAction.type === 'delete' ? t('git.deleteFile') :
+                   confirmAction.type === 'commit' ? t('git.confirmCommit') :
+                   confirmAction.type === 'pull' ? t('git.confirmPull') :
+                   confirmAction.type === 'publish' ? t('git.publishBranch') : t('git.confirmPush')}
                 </h3>
               </div>
               
@@ -1342,13 +1344,13 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                   onClick={() => setConfirmAction(null)}
                   className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
                 >
-                  Cancel
+                  {t('git.cancel')}
                 </button>
                 <button
                   onClick={confirmAndExecute}
                   className={`px-4 py-2 text-sm text-white rounded-md ${
                     (confirmAction.type === 'discard' || confirmAction.type === 'delete')
-                      ? 'bg-red-600 hover:bg-red-700' 
+                      ? 'bg-red-600 hover:bg-red-700'
                       : confirmAction.type === 'commit'
                       ? 'bg-blue-600 hover:bg-blue-700'
                       : confirmAction.type === 'pull'
@@ -1361,32 +1363,32 @@ function GitPanel({ selectedProject, isMobile, onFileOpen }) {
                   {confirmAction.type === 'discard' ? (
                     <>
                       <Trash2 className="w-4 h-4" />
-                      <span>Discard</span>
+                      <span>{t('git.discard')}</span>
                     </>
                   ) : confirmAction.type === 'delete' ? (
                     <>
                       <Trash2 className="w-4 h-4" />
-                      <span>Delete</span>
+                      <span>{t('common.delete')}</span>
                     </>
                   ) : confirmAction.type === 'commit' ? (
                     <>
                       <Check className="w-4 h-4" />
-                      <span>Commit</span>
+                      <span>{t('git.commit')}</span>
                     </>
                   ) : confirmAction.type === 'pull' ? (
                     <>
                       <Download className="w-4 h-4" />
-                      <span>Pull</span>
+                      <span>{t('git.pull')}</span>
                     </>
                   ) : confirmAction.type === 'publish' ? (
                     <>
                       <Upload className="w-4 h-4" />
-                      <span>Publish</span>
+                      <span>{t('git.publish')}</span>
                     </>
                   ) : (
                     <>
                       <Upload className="w-4 h-4" />
-                      <span>Push</span>
+                      <span>{t('git.push')}</span>
                     </>
                   )}
                 </button>

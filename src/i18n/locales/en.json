@@ -24,7 +24,10 @@
     "add": "Add",
     "remove": "Remove",
     "update": "Update",
-    "language": "Language"
+    "language": "Language",
+    "active": "Active",
+    "inactive": "Inactive",
+    "tip": "Tip"
   },
   "sidebar": {
     "newProject": "New Project",
@@ -47,6 +50,7 @@
     "removeFromFavorites": "Remove from favorites",
     "hideSidebar": "Hide sidebar",
     "showSidebar": "Show sidebar",
+    "aiCodingAssistant": "AI coding assistant interface",
     "timeAgo": {
       "justNow": "Just now",
       "minAgo": "{{count}} min ago",
@@ -57,6 +61,31 @@
       "daysAgo": "{{count}} days ago",
       "unknown": "Unknown"
     }
+  },
+  "mainContent": {
+    "welcome": {
+      "title": "Choose Your Project",
+      "description": "Select a project from the sidebar to start coding with Claude. Each project contains your chat sessions and file history.",
+      "tipDesktop": "Create a new project by clicking the folder icon in the sidebar",
+      "tipMobile": "Tap the menu button above to access projects"
+    },
+    "loading": {
+      "title": "Loading Claude Code UI",
+      "subtitle": "Setting up your workspace..."
+    },
+    "tabs": {
+      "chat": "Chat",
+      "shell": "Shell",
+      "files": "Files",
+      "projectFiles": "Project Files",
+      "git": "Source Control",
+      "tasks": "Tasks",
+      "taskMaster": "TaskMaster",
+      "project": "Project"
+    },
+    "newSession": "New Session",
+    "dragToResize": "Drag to resize",
+    "prdSaved": "PRD saved successfully!"
   },
   "navigation": {
     "chat": "Chat",
@@ -78,7 +107,15 @@
     "sendMessage": "Send message",
     "abort": "Abort",
     "regenerate": "Regenerate",
-    "tokenUsage": "Token Usage"
+    "tokenUsage": "Token Usage",
+    "dropImagesHere": "Drop images here",
+    "implementationPlan": "Implementation Plan",
+    "permissionModes": {
+      "default": "Default Mode",
+      "acceptEdits": "Accept Edits",
+      "planMode": "Plan Mode",
+      "trustAll": "Trust All"
+    }
   },
   "onboarding": {
     "welcome": "Welcome to Claude Code UI",
@@ -114,27 +151,79 @@
   },
   "settings": {
     "title": "Settings",
+    "saveSettings": "Save Settings",
+    "saveSuccess": "Settings saved successfully!",
+    "saveFailed": "Failed to save settings",
     "tabs": {
       "tools": "Tools",
       "mcpServers": "MCP Servers",
       "codeEditor": "Code Editor",
       "apiKeys": "API Keys",
+      "credentials": "Credentials",
       "git": "Git",
       "tasks": "Tasks",
       "appearance": "Appearance"
     },
+    "auth": {
+      "title": "Authentication",
+      "signIn": "Sign in to your Claude account to enable AI features",
+      "signInCursor": "Sign in to your Cursor account to enable AI features",
+      "reAuth": "Re-authenticate or switch accounts",
+      "checking": "Checking authentication...",
+      "loggedIn": "Logged in",
+      "as": "as",
+      "notAuthenticated": "Not authenticated",
+      "claudeCliLogin": "Claude CLI Login",
+      "cursorCliLogin": "Cursor CLI Login",
+      "login": "Login"
+    },
+    "permissions": {
+      "title": "Permission Settings",
+      "cursorTitle": "Cursor Permission Settings",
+      "skipPrompts": "Skip permission prompts (use with caution)",
+      "skipPromptsDesc": "Equivalent to --dangerously-skip-permissions flag",
+      "skipPromptsDescCursor": "Equivalent to -f flag in Cursor CLI"
+    },
     "tools": {
       "allowed": "Allowed Tools",
+      "allowedDesc": "Tools that are automatically allowed without prompting for permission",
       "disallowed": "Disallowed Tools",
+      "disallowedDesc": "Tools that are automatically blocked without prompting for permission",
       "skipPermissions": "Skip Permissions",
-      "addTool": "Add tool pattern",
+      "addTool": "Add Tool",
+      "quickAddTools": "Quick add common tools:",
+      "noAllowed": "No allowed tools configured",
+      "noDisallowed": "No disallowed tools configured",
       "commonPatterns": "Common Patterns",
-      "provider": "Provider"
+      "provider": "Provider",
+      "patternExamples": "Tool Pattern Examples:",
+      "patternAllowGitLog": "Allow all git log commands",
+      "patternAllowGitDiff": "Allow all git diff commands",
+      "patternAllowWrite": "Allow all Write tool usage",
+      "patternAllowRead": "Allow all Read tool usage",
+      "patternBlockRm": "Block all rm commands (dangerous)"
+    },
+    "cursor": {
+      "allowedCommands": "Allowed Shell Commands",
+      "allowedCommandsDesc": "Shell commands that are automatically allowed without prompting for permission",
+      "disallowedCommands": "Disallowed Shell Commands",
+      "disallowedCommandsDesc": "Shell commands that should always be denied",
+      "addCommand": "Add Command",
+      "quickAddCommands": "Quick add common commands:",
+      "noAllowedCommands": "No allowed shell commands configured",
+      "noDisallowedCommands": "No disallowed shell commands configured",
+      "commandExamples": "Cursor Shell Command Examples:",
+      "exampleLs": "Allow ls command",
+      "exampleGitStatus": "Allow git status command",
+      "exampleMkdir": "Allow mkdir command",
+      "exampleFlag": "flag - Skip all permission prompts (dangerous)"
     },
     "mcp": {
       "title": "MCP Servers",
+      "description": "Model Context Protocol servers provide additional tools and data sources to Claude",
       "addServer": "Add MCP Server",
       "editServer": "Edit Server",
+      "command": "Command",
       "serverName": "Server Name",
       "serverType": "Type",
       "scope": "Scope",
@@ -161,21 +250,41 @@
     },
     "apiKeys": {
       "title": "API Keys",
-      "newKey": "Create New Key",
+      "newKey": "New API Key",
       "keyName": "API Key Name",
       "keyNamePlaceholder": "API Key Name (e.g., Production Server)",
+      "description": "Generate API keys to access the external API from other applications.",
+      "documentation": "API Documentation",
+      "noKeysYet": "No API keys created yet.",
       "created": "Created",
+      "lastUsed": "Last used",
       "expires": "Expires",
       "neverExpires": "Never",
       "saveWarning": "⚠️ Save Your API Key",
-      "saveWarningDetail": "Make sure to copy your API key now. You won't be able to see it again!",
+      "saveWarningDetail": "This is the only time you'll see this key. Store it securely.",
+      "savedIt": "I've saved it",
       "copyKey": "Copy Key",
-      "generating": "Generating..."
+      "generating": "Generating...",
+      "confirmDelete": "Are you sure you want to delete this API key?"
+    },
+    "githubCredentials": {
+      "title": "GitHub Credentials",
+      "addToken": "Add Token",
+      "description": "Add GitHub Personal Access Tokens to clone private repositories. You can also pass tokens directly in API requests without storing them.",
+      "noTokensYet": "No GitHub tokens added yet.",
+      "tokenName": "Token Name",
+      "tokenNamePlaceholder": "Token Name (e.g., Personal Repos)",
+      "tokenPlaceholder": "GitHub Personal Access Token (ghp_...)",
+      "descriptionPlaceholder": "Description (optional)",
+      "added": "Added",
+      "howToCreate": "How to create a GitHub Personal Access Token →",
+      "confirmDelete": "Are you sure you want to delete this GitHub token?"
     },
     "git": {
       "title": "Git Configuration",
       "name": "Git Name",
       "email": "Git Email",
+      "description": "Configure your git identity for commits. These settings will be applied globally.",
       "autoCommit": "Auto Commit",
       "autoCommitDesc": "Automatically commit changes when saving files"
     },
@@ -204,6 +313,39 @@
       "fontSizeDesc": "Default font size for the code editor"
     }
   },
+  "quickSettings": {
+    "title": "Quick Settings",
+    "openPanel": "Open settings panel",
+    "closePanel": "Close settings panel",
+    "sections": {
+      "appearance": "Appearance",
+      "toolDisplay": "Tool Display",
+      "viewOptions": "View Options",
+      "inputSettings": "Input Settings"
+    },
+    "darkMode": "Dark Mode",
+    "autoExpandTools": "Auto-expand tools",
+    "showRawParameters": "Show raw parameters",
+    "showThinking": "Show thinking",
+    "autoScrollToBottom": "Auto-scroll to bottom",
+    "sendByCtrlEnter": "Send by Ctrl+Enter",
+    "sendByCtrlEnterDesc": "When enabled, pressing Ctrl+Enter will send the message instead of just Enter. This is useful for IME users to avoid accidental sends."
+  },
+  "tasksSettings": {
+    "checkingInstallation": "Checking TaskMaster installation...",
+    "notInstalled": {
+      "title": "TaskMaster AI CLI Not Installed",
+      "description": "TaskMaster CLI is required to use task management features. Install it to get started:",
+      "installCommand": "npm install -g task-master-ai",
+      "viewOnGitHub": "View on GitHub",
+      "afterInstallation": "After installation:",
+      "step1": "Restart this application",
+      "step2": "TaskMaster features will automatically become available",
+      "step3": "Use task-master init in your project directory"
+    },
+    "enableIntegration": "Enable TaskMaster Integration",
+    "enableDesc": "Show TaskMaster tasks, banners, and sidebar indicators across the interface"
+  },
   "git": {
     "title": "Git",
     "staged": "Staged Changes",
@@ -213,14 +355,66 @@
     "unstage": "Unstage",
     "stageAll": "Stage All",
     "commit": "Commit",
+    "committing": "Committing...",
     "commitMessage": "Commit message",
-    "commitMessagePlaceholder": "Enter commit message...",
+    "commitMessagePlaceholder": "Message (Ctrl+Enter to commit)",
+    "commitChanges": "Commit Changes",
     "branch": "Branch",
+    "branchName": "Branch Name",
     "switchBranch": "Switch Branch",
     "createBranch": "Create Branch",
+    "createNewBranch": "Create New Branch",
+    "creating": "Creating...",
     "deleteBranch": "Delete Branch",
-    "noChanges": "No changes",
-    "currentBranch": "Current Branch"
+    "noChanges": "No changes detected",
+    "currentBranch": "Current Branch",
+    "selectProject": "Select a project to view source control",
+    "changes": "Changes",
+    "history": "History",
+    "filesSelected": "{{count}} file selected",
+    "filesSelected_plural": "{{count}} files selected",
+    "selected": "selected",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "all": "All",
+    "none": "None",
+    "fileStatusGuide": "File Status Guide",
+    "modified": "Modified",
+    "added": "Added",
+    "deleted": "Deleted",
+    "noCommitsYet": "No commits yet",
+    "noCommitsDesc": "This repository doesn't have any commits yet. Create your first commit to start tracking changes.",
+    "createInitialCommit": "Create Initial Commit",
+    "creatingInitialCommit": "Creating Initial Commit...",
+    "noCommitsFound": "No commits found",
+    "gitTip": "Run <code>git init</code> in your project directory to initialize git source control.",
+    "publish": "Publish",
+    "publishing": "Publishing...",
+    "push": "Push",
+    "pushing": "Pushing...",
+    "pull": "Pull",
+    "pulling": "Pulling...",
+    "fetch": "Fetch",
+    "fetching": "Fetching...",
+    "discard": "Discard",
+    "discardChanges": "Discard Changes",
+    "deleteFile": "Delete File",
+    "confirmCommit": "Confirm Commit",
+    "confirmPull": "Confirm Pull",
+    "confirmPush": "Confirm Push",
+    "publishBranch": "Publish Branch",
+    "cancel": "Cancel",
+    "generateCommitMessage": "Generate commit message",
+    "commitFilesBtn": "Commit {{count}} file",
+    "commitFilesBtn_plural": "Commit {{count}} files",
+    "branchFromCurrent": "This will create a new branch from the current branch ({{branch}})",
+    "upToDate": "Up to date with remote",
+    "commitsAhead": "{{count}} commit ahead",
+    "commitsAhead_plural": "{{count}} commits ahead",
+    "commitsBehind": "{{count}} commit behind",
+    "commitsBehind_plural": "{{count}} commits behind",
+    "scrollView": "Scroll",
+    "wrapView": "Wrap"
   },
   "tasks": {
     "title": "Tasks",
@@ -265,7 +459,47 @@
     "previousChange": "Previous change",
     "nextChange": "Next change",
     "clickToEdit": "Click to edit filename",
-    "clickToOpen": "Click to open file"
+    "clickToOpen": "Click to open file",
+    "showingChanges": "Showing changes",
+    "changes": "changes",
+    "lines": "Lines",
+    "characters": "Characters",
+    "shortcuts": "Press Ctrl+S to save • Esc to close",
+    "loading": "Loading {{fileName}}..."
+  },
+  "prdEditor": {
+    "loading": "Loading PRD...",
+    "filenamePlaceholder": "Enter PRD filename",
+    "editFilename": "Click to edit filename",
+    "prd": "PRD",
+    "new": "New",
+    "subtitle": "Product Requirements Document",
+    "previewMode": "Preview markdown",
+    "editMode": "Switch to edit mode",
+    "enableWordWrap": "Enable word wrap",
+    "disableWordWrap": "Disable word wrap",
+    "toggleTheme": "Toggle theme",
+    "downloadPrd": "Download PRD",
+    "generateTasks": "Generate tasks from PRD content",
+    "generateTasksShort": "Generate Tasks",
+    "savePrd": "Save PRD",
+    "words": "Words",
+    "format": "Format: Markdown",
+    "generateModal": {
+      "title": "Generate Tasks from PRD",
+      "proTipTitle": "💡 Pro Tip: Ask Claude Code Directly!",
+      "proTipDesc": "You can simply ask Claude Code in the chat to parse your PRD and generate tasks. The AI assistant will automatically save your PRD and create detailed tasks with implementation details.",
+      "exampleLabel": "Example:",
+      "willDo": "This will: Save your PRD, analyze its content, and generate structured tasks with subtasks, dependencies, and implementation details.",
+      "learnMore": "For more examples and advanced usage patterns:",
+      "viewDocs": "View TaskMaster Documentation →",
+      "gotIt": "Got it, I'll ask Claude Code directly"
+    },
+    "overwriteModal": {
+      "title": "File Already Exists",
+      "message": "A PRD file named \"{{fileName}}\" already exists. Do you want to overwrite it with the current content?",
+      "overwrite": "Overwrite"
+    }
   },
   "fileTree": {
     "title": "Files",
@@ -301,6 +535,434 @@
     "browse": "Browse",
     "recentPaths": "Recent Paths",
     "creating": "Creating...",
-    "created": "Project created successfully!"
+    "created": "Project created successfully!",
+    "steps": {
+      "type": "Type",
+      "configure": "Configure",
+      "confirm": "Confirm"
+    },
+    "chooseTypeQuestion": "Do you already have a workspace, or would you like to create a new one?",
+    "existingWorkspace": "Existing Workspace",
+    "existingWorkspaceDesc": "I already have a workspace on my server and just need to add it to the project list",
+    "newWorkspace": "New Workspace",
+    "newWorkspaceDesc": "Create a new workspace, optionally clone from a GitHub repository",
+    "workspacePath": "Workspace Path",
+    "whereCreateWorkspace": "Where should the workspace be created?",
+    "existingPathPlaceholder": "/path/to/existing/workspace",
+    "newPathPlaceholder": "/path/to/new/workspace",
+    "existingPathHint": "Full path to your existing workspace directory",
+    "newPathHint": "Full path where the new workspace will be created",
+    "githubUrlOptional": "GitHub URL (Optional)",
+    "githubUrlPlaceholder": "https://github.com/username/repository",
+    "githubUrlHint": "Leave empty to create an empty workspace, or provide a GitHub URL to clone",
+    "githubAuthOptional": "GitHub Authentication (Optional)",
+    "githubAuthHint": "Only required for private repositories. Public repos can be cloned without authentication.",
+    "loadingTokens": "Loading stored tokens...",
+    "storedToken": "Stored Token",
+    "newToken": "New Token",
+    "nonePublic": "None (Public)",
+    "selectToken": "Select Token",
+    "selectTokenPlaceholder": "-- Select a token --",
+    "githubToken": "GitHub Token",
+    "tokenForOperation": "This token will be used only for this operation",
+    "publicRepoTip": "💡 <strong>Public repositories</strong> don't require authentication. You can skip providing a token if cloning a public repo.",
+    "tokenOptionalForPublic": "GitHub Token (Optional for Public Repos)",
+    "tokenPlaceholderOptional": "ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (leave empty for public repos)",
+    "noStoredTokensHint": "No stored tokens available. You can add tokens in Settings → API Keys for easier reuse.",
+    "reviewConfig": "Review Your Configuration",
+    "workspaceType": "Workspace Type",
+    "path": "Path",
+    "cloneFrom": "Clone From",
+    "authentication": "Authentication",
+    "usingStoredToken": "Using stored token: {{name}}",
+    "usingProvidedToken": "Using provided token",
+    "noAuthentication": "No authentication",
+    "confirmExistingMsg": "The workspace will be added to your project list and will be available for Claude/Cursor sessions.",
+    "confirmNewGithubMsg": "A new workspace will be created and the repository will be cloned from GitHub.",
+    "confirmNewEmptyMsg": "An empty workspace directory will be created at the specified path.",
+    "createProject": "Create Project",
+    "selectTypeError": "Please select whether you have an existing workspace or want to create a new one",
+    "providePathError": "Please provide a workspace path"
+  },
+  "setupForm": {
+    "welcomeTitle": "Welcome to Claude Code UI",
+    "welcomeDesc": "Set up your account to get started",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "passwordMismatch": "Passwords do not match",
+    "usernameTooShort": "Username must be at least 3 characters long",
+    "passwordTooShort": "Password must be at least 6 characters long",
+    "settingUp": "Setting up...",
+    "createAccount": "Create Account",
+    "singleUserNote": "This is a single-user system. Only one account can be created."
+  },
+  "login": {
+    "welcomeBack": "Welcome Back",
+    "signInToAccount": "Sign in to your Claude Code UI account",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "signIn": "Sign In",
+    "signingIn": "Signing in...",
+    "enterCredentials": "Enter your credentials to access Claude Code UI",
+    "errorBothRequired": "Please enter both username and password",
+    "claudeCliLogin": "Claude CLI Login",
+    "cursorCliLogin": "Cursor CLI Login",
+    "cliLogin": "CLI Login"
+  },
+  "errorBoundary": {
+    "somethingWentWrong": "Something went wrong",
+    "errorOccurred": "An error occurred while loading the chat interface.",
+    "errorDetails": "Error Details",
+    "tryAgain": "Try Again"
+  },
+  "createTask": {
+    "title": "Create AI-Generated Task",
+    "proTipTitle": "💡 Pro Tip: Ask Claude Code Directly!",
+    "proTipDesc": "You can simply ask Claude Code in the chat to create tasks for you. The AI assistant will automatically generate detailed tasks with research-backed insights.",
+    "exampleLabel": "Example:",
+    "examplePrompt": "\"Please add a new task to implement user profile image uploads using Cloudinary, research the best approach.\"",
+    "runsCommand": "This runs:",
+    "learnMore": "For more examples and advanced usage patterns:",
+    "viewDocs": "View TaskMaster Documentation →",
+    "gotIt": "Got it, I'll ask Claude Code directly"
+  },
+  "gitSettings": {
+    "title": "Git Configuration",
+    "description": "Configure your git identity for commits. These settings will be applied globally via",
+    "gitName": "Git Name",
+    "gitNameHelp": "Your name for git commits",
+    "gitEmail": "Git Email",
+    "gitEmailHelp": "Your email for git commits",
+    "saving": "Saving...",
+    "saveConfig": "Save Configuration",
+    "savedSuccess": "Saved successfully"
+  },
+  "apiKeysSettings": {
+    "saveApiKey": "⚠️ Save Your API Key",
+    "saveOnlyTime": "This is the only time you'll see this key. Store it securely.",
+    "savedIt": "I've saved it",
+    "apiKeys": "API Keys",
+    "newApiKey": "New API Key",
+    "apiKeysDesc": "Generate API keys to access the external API from other applications.",
+    "apiKeyNamePlaceholder": "API Key Name (e.g., Production Server)",
+    "noApiKeysYet": "No API keys created yet.",
+    "created": "Created",
+    "lastUsed": "Last used",
+    "githubTokens": "GitHub Tokens",
+    "addToken": "Add Token",
+    "githubTokensDesc": "Add GitHub Personal Access Tokens to clone private repositories via the external API.",
+    "tokenNamePlaceholder": "Token Name (e.g., Personal Repos)",
+    "githubTokenPlaceholder": "GitHub Personal Access Token (ghp_...)",
+    "noGithubTokensYet": "No GitHub tokens added yet.",
+    "added": "Added",
+    "externalApiDoc": "External API Documentation",
+    "externalApiDocDesc": "Learn how to use the external API to trigger Claude/Cursor sessions from your applications.",
+    "viewApiDoc": "View API Documentation →",
+    "confirmDeleteApiKey": "Are you sure you want to delete this API key?",
+    "confirmDeleteToken": "Are you sure you want to delete this GitHub token?"
+  },
+  "versionUpdate": {
+    "updateAvailable": "Update Available",
+    "newVersionReady": "A new version is ready",
+    "currentVersion": "Current Version",
+    "latestVersion": "Latest Version",
+    "whatsNew": "What's New:",
+    "viewFullRelease": "View full release",
+    "updateProgress": "Update Progress:",
+    "manualUpgrade": "Manual upgrade:",
+    "upgradeCommand": "git checkout main && git pull && npm install",
+    "upgradeHint": "Or click \"Update Now\" to run the update automatically.",
+    "later": "Later",
+    "copyCommand": "Copy Command",
+    "updateNow": "Update Now",
+    "updating": "Updating...",
+    "startingUpdate": "Starting update...",
+    "updateSuccess": "Update completed successfully!",
+    "restartHint": "Please restart the server to apply changes.",
+    "updateFailed": "Update failed:",
+    "showSidebar": "Show sidebar"
+  },
+  "taskCard": {
+    "task": "Task",
+    "taskId": "Task ID: {{id}}",
+    "dependsOn": "Depends on",
+    "statusLabel": "Status",
+    "progress": "Progress",
+    "subtasksCompleted": "{{done}} of {{total}} subtasks completed",
+    "subtasksSummary": "{{done}} completed, {{pending}} pending, {{inProgress}} in progress",
+    "status": {
+      "done": "Done",
+      "inProgress": "In Progress",
+      "review": "Review",
+      "deferred": "Deferred",
+      "cancelled": "Cancelled",
+      "pending": "Pending"
+    },
+    "priority": {
+      "high": "High Priority",
+      "medium": "Medium Priority",
+      "low": "Low Priority",
+      "notSet": "No Priority Set"
+    }
+  },
+  "taskDetail": {
+    "task": "Task",
+    "taskId": "Task ID",
+    "copyTaskId": "Click to copy task ID",
+    "subtaskOf": "Subtask of Task {{id}}",
+    "taskTitlePlaceholder": "Task title",
+    "saving": "Saving...",
+    "saveChanges": "Save changes",
+    "cancelEditing": "Cancel editing",
+    "editTask": "Edit task",
+    "statusLabel": "Status",
+    "priorityLabel": "Priority",
+    "dependenciesLabel": "Dependencies",
+    "descriptionLabel": "Description",
+    "notSet": "Not set",
+    "noDependencies": "No dependencies",
+    "clickToViewTask": "Click to view Task {{id}}",
+    "descriptionPlaceholder": "Task description",
+    "noDescription": "No description provided",
+    "implementationDetails": "Implementation Details",
+    "implementationDetailsPlaceholder": "Implementation details",
+    "testStrategy": "Test Strategy",
+    "subtasks": "Subtasks ({{count}})",
+    "status": {
+      "pending": "Pending",
+      "inProgress": "In Progress",
+      "review": "Review",
+      "done": "Done",
+      "deferred": "Deferred",
+      "cancelled": "Cancelled"
+    }
+  },
+  "taskList": {
+    "searchPlaceholder": "Search tasks...",
+    "filters": "Filters",
+    "addPrd": "Add PRD",
+    "addTask": "Add Task",
+    "addTaskTitle": "Add a new task",
+    "createPrdTitle": "Create Product Requirements Document",
+    "prds": "PRDs",
+    "createNewPrd": "Create New PRD",
+    "existingPrds": "Existing PRDs",
+    "helpGuide": "TaskMaster Getting Started Guide",
+    "noMatchingTasks": "No tasks match your filters",
+    "tryAdjustingFilters": "Try adjusting your search or filter criteria.",
+    "showingTasks": "Showing {{filtered}} of {{total}} tasks",
+    "clearFilters": "Clear Filters",
+    "views": {
+      "kanban": "Kanban view",
+      "list": "List view",
+      "grid": "Grid view"
+    },
+    "filterLabels": {
+      "status": "Status",
+      "priority": "Priority",
+      "sortBy": "Sort By",
+      "allStatuses": "All Statuses",
+      "allPriorities": "All Priorities"
+    },
+    "sortOptions": {
+      "idAsc": "ID (Ascending)",
+      "idDesc": "ID (Descending)",
+      "titleAsc": "Title (A-Z)",
+      "titleDesc": "Title (Z-A)",
+      "statusAsc": "Status (Pending First)",
+      "statusDesc": "Status (Done First)",
+      "priorityAsc": "Priority (High First)",
+      "priorityDesc": "Priority (Low First)"
+    },
+    "kanban": {
+      "toDo": "📋 To Do",
+      "inProgress": "🚀 In Progress",
+      "done": "✅ Done",
+      "blocked": "🚫 Blocked",
+      "deferred": "⏳ Deferred",
+      "cancelled": "❌ Cancelled",
+      "noTasksYet": "No tasks yet",
+      "emptyPending": "Tasks will appear here",
+      "emptyInProgress": "Move tasks here when started",
+      "emptyDone": "Completed tasks appear here",
+      "emptyDefault": "Tasks with this status will appear here"
+    },
+    "notConfigured": {
+      "title": "TaskMaster AI is not configured",
+      "description": "TaskMaster helps break down complex projects into manageable tasks with AI-powered assistance",
+      "whatIs": "🎯 What is TaskMaster?",
+      "initButton": "Initialize TaskMaster AI",
+      "features": {
+        "aiPowered": "AI-Powered Task Management",
+        "aiPoweredDesc": "Break complex projects into manageable subtasks",
+        "prdTemplates": "PRD Templates",
+        "prdTemplatesDesc": "Generate tasks from Product Requirements Documents",
+        "dependency": "Dependency Tracking",
+        "dependencyDesc": "Understand task relationships and execution order",
+        "progress": "Progress Visualization",
+        "progressDesc": "Kanban boards and detailed task analytics",
+        "cli": "CLI Integration",
+        "cliDesc": "Use taskmaster commands for advanced workflows"
+      }
+    },
+    "gettingStarted": {
+      "title": "Getting Started with TaskMaster",
+      "subtitle": "TaskMaster is initialized! Here's what to do next:",
+      "tip": "Start with a PRD to get the most out of TaskMaster's AI-powered task generation",
+      "step1": {
+        "title": "Create a Product Requirements Document (PRD)",
+        "desc": "Discuss your project idea and create a PRD that describes what you want to build."
+      },
+      "step2": {
+        "title": "Generate Tasks from PRD",
+        "desc": "Once you have a PRD, ask your AI assistant to parse it and TaskMaster will automatically break it down into manageable tasks with implementation details."
+      },
+      "step3": {
+        "title": "Analyze & Expand Tasks",
+        "desc": "Ask your AI assistant to analyze task complexity and expand them into detailed subtasks for easier implementation."
+      },
+      "step4": {
+        "title": "Start Building",
+        "desc": "Ask your AI assistant to begin working on tasks, update their status, and add new tasks as your project evolves."
+      }
+    },
+    "setupModal": {
+      "title": "TaskMaster Setup",
+      "subtitle": "Interactive CLI for {{project}}",
+      "completed": "TaskMaster setup completed! You can now close this window.",
+      "autoStart": "TaskMaster initialization will start automatically",
+      "closeAndContinue": "Close & Continue"
+    },
+    "helpModal": {
+      "title": "Getting Started with TaskMaster",
+      "subtitle": "Your guide to productive task management",
+      "exampleLabel": "💬 Example:",
+      "viewMoreExamples": "View more examples and usage patterns →",
+      "step1": {
+        "title": "Create a Product Requirements Document (PRD)",
+        "desc": "Discuss your project idea and create a PRD that describes what you want to build."
+      },
+      "step2": {
+        "title": "Generate Tasks from PRD",
+        "desc": "Once you have a PRD, ask your AI assistant to parse it and TaskMaster will automatically break it down into manageable tasks with implementation details.",
+        "example": "I've just initialized a new project with Claude Task Master. I have a PRD at .taskmaster/docs/prd.txt. Can you help me parse it and set up the initial tasks?"
+      },
+      "step3": {
+        "title": "Analyze & Expand Tasks",
+        "desc": "Ask your AI assistant to analyze task complexity and expand them into detailed subtasks for easier implementation.",
+        "example": "Task 5 seems complex. Can you break it down into subtasks?"
+      },
+      "step4": {
+        "title": "Start Building",
+        "desc": "Ask your AI assistant to begin working on tasks, update their status, and add new tasks as your project evolves.",
+        "example": "Please add a new task to implement user profile image uploads using Cloudinary, research the best approach."
+      },
+      "proTips": {
+        "title": "💡 Pro Tips",
+        "tip1": "Use the search bar to quickly find specific tasks",
+        "tip2": "Switch between Kanban, List, and Grid views using the view toggles",
+        "tip3": "Use filters to focus on specific task statuses or priorities",
+        "tip4": "Click on any task to view detailed information and manage subtasks"
+      },
+      "learnMore": {
+        "title": "📚 Learn More",
+        "desc": "TaskMaster AI is an advanced task management system built for developers. Get documentation, examples, and contribute to the project.",
+        "viewGithub": "View on GitHub"
+      }
+    }
+  },
+  "nextTaskBanner": {
+    "notConfigured": {
+      "title": "TaskMaster AI is not configured",
+      "initButton": "Initialize TaskMaster AI"
+    },
+    "whatIs": {
+      "title": "🎯 What is TaskMaster?",
+      "features": {
+        "aiPowered": {
+          "title": "AI-Powered Task Management:",
+          "desc": "Break complex projects into manageable subtasks"
+        },
+        "prdTemplates": {
+          "title": "PRD Templates:",
+          "desc": "Generate tasks from Product Requirements Documents"
+        },
+        "dependencyTracking": {
+          "title": "Dependency Tracking:",
+          "desc": "Understand task relationships and execution order"
+        },
+        "progressVisualization": {
+          "title": "Progress Visualization:",
+          "desc": "Kanban boards and detailed task analytics"
+        },
+        "cliIntegration": {
+          "title": "CLI Integration:",
+          "desc": "Use taskmaster commands for advanced workflows"
+        }
+      }
+    },
+    "initTaskMaster": "Initialize TaskMaster",
+    "addMoreTasks": {
+      "title": "Add more tasks:",
+      "desc": "Create additional tasks manually or generate them from a PRD template"
+    },
+    "createTaskManually": "Create a new task manually",
+    "parsing": "Parsing...",
+    "generateFromPRD": "Generate tasks from PRD template",
+    "task": "Task",
+    "priority": {
+      "high": "High Priority",
+      "medium": "Medium Priority",
+      "low": "Low Priority"
+    },
+    "startTask": "Start Task",
+    "viewDetails": "View task details",
+    "viewAllTasks": "View all tasks",
+    "allDone": "All done! 🎉",
+    "noPendingTasks": "No pending tasks",
+    "review": "Review",
+    "cliModal": {
+      "title": "TaskMaster Setup",
+      "subtitle": "Interactive CLI for {{project}}",
+      "autoStart": "TaskMaster initialization will start automatically",
+      "close": "Close"
+    },
+    "createTaskModal": {
+      "title": "Create New Task",
+      "useAI": "Use AI to generate task details",
+      "aiDescription": "Task Description (AI will generate details)",
+      "aiPlaceholder": "Describe what you want to accomplish...",
+      "taskTitle": "Task Title",
+      "titlePlaceholder": "Enter task title...",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe the task...",
+      "priorityLabel": "Priority",
+      "priorityLow": "Low",
+      "priorityMedium": "Medium",
+      "priorityHigh": "High",
+      "cancel": "Cancel",
+      "creating": "Creating...",
+      "create": "Create Task"
+    },
+    "templateSelector": {
+      "loading": "Loading templates...",
+      "selectTitle": "Select PRD Template",
+      "customizeTitle": "Customize Template",
+      "generatingTitle": "Generating Tasks",
+      "fileName": "File Name",
+      "customizeLabel": "Customize Template",
+      "enterPlaceholder": "Enter {{field}}",
+      "back": "Back",
+      "applying": "Applying...",
+      "applyGenerate": "Apply & Generate Tasks",
+      "success": "Template Applied Successfully!",
+      "generating": "Your PRD has been created and tasks are being generated..."
+    }
   }
 }
